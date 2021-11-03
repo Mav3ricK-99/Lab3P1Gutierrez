@@ -1,0 +1,329 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: content-box;
+}
+@font-face {
+    font-family: "Roboto-Medium";
+    src: url("./fonts/Roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("./fonts/Roboto/Roboto-Thin.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url("./fonts/Roboto/Roboto-Bold.ttf");
+}
+
+#app{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+}
+
+#navSection{
+    background:rgba(70, 130, 180);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 13vh;
+}
+
+#footerSection{
+
+    background:rgba(70, 130, 180);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+}
+
+#footerSection p{
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:white;
+}
+
+#footerSection ul{
+    display: flex;
+    flex-direction: row;
+}
+
+#footerSection ul li{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#navSection ul, #footerSection ul{
+    
+    list-style: none
+}
+
+#navSection ul a, #footerSection ul a{
+
+    color:white;
+    text-decoration: none;
+    font-family: Arial;
+
+}
+
+#navSection ul li{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#tituloAdministracion{
+
+    padding: 1em;
+    font-size: 27px;
+    text-align: center;
+    font-family: "Roboto-Regular";
+}
+
+#inputHorizontales{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#seccionFormulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 35.5vw;
+}
+
+#formularioBienesRaices{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+}
+
+#modalidad{
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    width:55%;
+}
+
+#venta, #alquiler{
+    margin-left: 1em;
+}
+
+input[type="text"], input[type="number"]{
+
+    background-color: rgb(225, 225, 225);
+    
+    padding: .5em .5em .5em .6em;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+
+    font-size:13.5px;
+    font-family: "Roboto-Medium", Arial;
+}
+
+input[type="text"], #precio{
+    margin-bottom: 2em;
+}
+
+label{
+
+    font-size: 14px;
+    margin-bottom: .33em;
+    font-family: "Roboto-Bold", Arial;
+}
+
+#btnGuardar{
+    margin-top: 10px;
+    display: flex;
+    background-color: rgb(16, 173, 121);
+}
+
+.mensajeTabla{
+    color:darkgray;
+    font-size: 22px;
+    font-family: "Roboto-Bold", Arial;
+
+    cursor:default;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
+
+  #errorSection{
+    
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 27vw;
+
+      color: #842029;
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+
+      padding: .5rem .5rem;
+      border: 1px solid;
+      border-radius: 0.25rem;
+      margin-bottom: 2vh;
+        
+      font-size: 17px;
+      font-family: Calibri, Arial;
+  }
+
+  #errorSection ul{
+      margin-top: .3vh;
+  }
+
+  #errorSection li{
+      margin-left: 1vw;
+  }
+
+  #seccionTabla{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tabla_vehiculo{
+
+    margin-top:20px;
+    margin-bottom: 60px;
+    width: 37vw;
+
+    border-collapse: collapse;
+    font-family: Calibri, Arial;
+
+    color: white;
+  }
+
+  #tabla_vehiculo th:last-child{
+      border-radius: 0 12px 0 0;
+  }
+
+  #tabla_vehiculo th:first-child{
+    border-radius: 12px 0 0 0;
+}
+
+  #tabla_vehiculo th{
+      padding: .5rem;
+      font-size: 21px;
+
+      background: rgb(30, 240, 170);
+      font-weight: 700;
+ }
+
+  #tabla_vehiculo td{
+
+    text-align: center;
+    left: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    
+  }
+
+  .even{
+    background: rgb(18, 189, 132);
+  }
+
+  .odd{
+    background: rgb(16, 224, 155);
+  }
+
+  #divBotones > button{
+
+    width: min-content;
+    padding: .6em 1.5em .6em 1.5em;
+    font-size: 14px;
+
+    font-family: Arial;
+    font-weight: 600;
+
+    color:white;
+
+    outline: none;
+    border:none;
+
+    cursor:pointer;
+
+  }
+  #divBotones{
+
+    width: 15.8vw;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #btnEliminar{
+    
+    background-color: rgb(255, 159, 34);
+}
+
+#btnCancelar{
+    
+    background-color: rgb(71, 51, 245);
+}
+
+#ayudaTabla{
+
+    font-family: Calibri;
+    color: gray;
+}
+
+
+
+
+@media screen and (max-width: 1100px) {
+    
+    #seccionFormulario{
+        width: 55vw;
+    }
+
+    #tabla_vehiculo{
+        width: 20vw;
+    }
+
+    #tabla_vehiculo th, #tabla_vehiculo td{
+        font-size:17px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    
+    #seccionFormulario{
+        width: 80vw;
+    }
+
+
+    #errorSection{
+        width:75vw;
+    }
+
+
+    #tabla_vehiculo th, #tabla_vehiculo td{
+        padding:0;
+        left:0;
+        font-size:14px;
+    }
+
+    #errorSection li{
+        margin-left: 4vw;
+    }
+}

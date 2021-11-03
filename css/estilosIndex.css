@@ -1,0 +1,144 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url("./fonts/Roboto/Roboto-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("./fonts/Roboto/Roboto-Thin.ttf");
+}
+
+header{
+    background-image: url("../Imagenes/porchesBanner.jpg");
+    background-repeat: none;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    max-width: 100%;
+    height: 42em;
+    padding-top: 3vw;
+}
+
+#headerNavegacionLogo{
+    display: flex;
+    justify-content:space-between;
+}
+
+#logo{
+    margin-left: 3vw;
+}
+
+#navSection{
+    margin-right: 3vw;
+}
+
+#navSection ul{
+    display: flex;
+}
+
+#navSection ul li{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#navSection ul{
+    
+    list-style: none
+}
+
+#navSection ul a{
+
+    color:white;
+    text-decoration: none;
+    font-family: Arial;
+
+}
+
+
+#titulosNav{
+
+    margin-left: 3vw;
+    margin-bottom: 2vw;
+}
+
+#titulosNav h1{
+
+    color: white;
+
+    font-family: "Roboto-Bold";
+    margin-bottom: 1vw;
+    font-size: 40px;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tituloAnuncios{
+
+    padding: 1em;
+    font-size: 27px;
+    text-align: center;
+    font-family: "Roboto-Regular";
+}
+
+.cardAnuncio{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    padding-left: 13px;
+    
+    border: 1px solid gray;
+    background: lightgray;
+    margin-bottom: 4vw;
+    width: 30vw;
+    height: 22vh;
+    font-size:16px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.cardAnuncio h3{
+
+    margin-top: 10px;
+    font-family: "Roboto-Bold";
+    font-size: 19px;
+}
+
+.precioCard{
+
+    color: rgb(98, 172, 98);
+}
+
+.datosNumericosCard{
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cardAnuncio button{
+
+    background: rgba(224, 135, 9);
+    color: white;
+    padding: 17px;
+    font-family: "Roboto-Bold";
+    font-weight: 800;
+
+    outline: none;
+    border:none;
+}
+
+.divDatosNumericos{
+    display: flex;
+    margin-bottom: 15px;
+}
