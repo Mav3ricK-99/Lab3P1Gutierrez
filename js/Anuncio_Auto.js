@@ -1,8 +1,8 @@
 class Anuncio_Auto extends Anuncio{
 
-    constructor(titulo, tipoVenta, descripcion, precio, cantPuertas, kilometraje, potencia, id_vehiculo = null) {
+    constructor(titulo, tipoVenta, descripcion, precio, cantPuertas, kilometraje, potencia) {
         
-        super(titulo, tipoVenta, descripcion, precio, id_vehiculo);
+        super(titulo, tipoVenta, descripcion, precio);
         this.cantPuertas = cantPuertas;
         this.kilometraje = kilometraje;
         this.potencia = potencia;

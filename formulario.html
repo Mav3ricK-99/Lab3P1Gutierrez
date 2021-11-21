@@ -51,7 +51,7 @@
                     <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" autocomplete="off">
 
                     <label for="precio">PRECIO</label>
-                    <input type="number" name="precio" id="precio" placeholder="Precio">
+                    <input type="text" name="precio" id="precio" placeholder="Precio">
 
                     <div id="inputHorizontales">
                         <img src="./Imagenes/svg/car-door-svgrepo-com.svg" width="30px"></svg>
@@ -74,6 +74,20 @@
 
             <section id="seccionTabla">
 
+                <article id="filtros">
+                    <h3>Filtros</h3>
+                    <div id="filtrosSelect">
+                        <select id="selectFiltro">
+                            <option value="todos" selected>Todos</option>
+                            <option value="alquiler">Alquiler</option>
+                            <option value="venta">Venta</option>
+                        </select>
+                        <div id="promedios">
+                            PROMEDIO DE PRECIOS:
+
+                        </div>
+                    </div>
+                </article>
                 <div id="spinner">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="115px" height="115px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                         <g>
@@ -115,6 +129,8 @@
             </footer>
         </main>
         <!--No puedo Usar import/export porque Chrome no te deja importar archivos de 'LocalHost' Aun con(type="module")-->
+        <script src="./node_modules/axios/dist/axios.min.js"></script>
+        <script src="./js/peticiones.js"></script>
         <script src="./js/Anuncio.js" defer></script>
         <script src="./js/Anuncio_Auto.js" defer></script>
         <script src="./js/validaciones.js" defer></script>

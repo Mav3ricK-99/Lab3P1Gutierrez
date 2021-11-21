@@ -1,36 +1,49 @@
-function mostrarAnuncios(){
+async function mostrarAnuncios() {
 
-    let vehiculos = localStorage.getItem("vehiculos");
+    let vehiculos = {}
+    await getVehiculos().then((data) => {
+        vehiculos = data;
+        localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
+    }).catch(e => {
+        alert(e.message)
+        armarDivError()
+        throw new Error(e.message);
+    })
 
-    if(!vehiculos || vehiculos.length < 1){
-        let pTablaVacia = document.createElement("p");
-        pTablaVacia.innerHTML = "No se encontraron Vehiculos";
-        pTablaVacia.className = "mensajeTabla";
-        document.getElementById("anuncios").appendChild(pTablaVacia);
-    }else{
-        
-        let anuncios = armarAnuncio(JSON.parse(vehiculos), "vehiculo");
+    if (!vehiculos || vehiculos.length < 1) {
+        armarDivError()
+    } else {
+
+        let anuncios = armarAnuncio(vehiculos, "vehiculo");
         document.getElementById("anuncios").appendChild(anuncios);
-      
     }
 }
+function armarDivError() {
 
-function armarAnuncio(objs, obj_name){
+    let pTablaVacia = document.createElement("p");
+    pTablaVacia.innerHTML = "No se encontraron Vehiculos";
+    pTablaVacia.className = "mensajeTabla";
+    document.getElementById("anuncios").appendChild(pTablaVacia);
+}
+
+function armarAnuncio(objs, obj_name) {
 
     let divAnuncios = document.createElement("div");
 
     objs.forEach((el) => {
         let divUnAnuncio = document.createElement("div");
-        divUnAnuncio.classList = "cardAnuncio"
+        divUnAnuncio.classList = "card"
 
         let h3Titulo = document.createElement("h3");
+        h3Titulo.classList = "card-title"
         let pDescripcion = document.createElement("p");
+        pDescripcion.classList = "card-subtitle mb-2 text-muted"
         let pPrecio = document.createElement("p");
-        pPrecio.classList = "precioCard";
+        pPrecio.classList = "card-text precioCard";
 
         h3Titulo.innerHTML = el.titulo;
         pDescripcion.innerHTML = el.descripcion;
-        pPrecio.innerHTML = "$" + el.precio;   
+        pPrecio.innerHTML = "$" + el.precio;
 
         let pPuertas = document.createElement("p");
         let pKm = document.createElement("p");
@@ -38,7 +51,7 @@ function armarAnuncio(objs, obj_name){
 
         pPuertas.innerHTML = el.cantPuertas;
         pKm.innerHTML = el.kilometraje;
-        pPotencia.innerHTML = el.potencia;   
+        pPotencia.innerHTML = el.potencia;
 
         let divDatosDescipcion = document.createElement("div");
         let divDatosNumericos = document.createElement("div");

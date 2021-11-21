@@ -1,4 +1,4 @@
-function enviarAnuncio(e) {
+async function enviarAnuncio(e) {
 
     e.preventDefault();
     
@@ -15,16 +15,14 @@ function enviarAnuncio(e) {
     let potencia = document.getElementById('potencia').value;
 
     let vehiculo = new Anuncio_Auto(titulo, transaccion, descripcion, precio, puertas, kilometros, potencia);
-    
-    if(!localStorage.getItem("vehiculos")){
-        localStorage.setItem("vehiculos", "["+JSON.stringify(vehiculo)+"]");
-    }else{
-        let vehiculos = JSON.parse(localStorage.getItem("vehiculos"));
-        vehiculos.push(vehiculo);
-        
-        localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-    }
-    
+
+    await agregarVehiculo(vehiculo).then(() => {
+        agregarAutoLocalStorage(vehiculo);
+    }).catch(e => {
+        alert(e.message)
+        throw new Error(e.message);
+    })
+
     document.getElementById("formularioBienesRaices").reset();
     
     let primerElSeccTabla = document.getElementById("seccionTabla").children[0];
@@ -34,6 +32,18 @@ function enviarAnuncio(e) {
     refrescarTabla();
 
     return true;
+}
+
+function agregarAutoLocalStorage(vehiculo){
+    
+    if(!localStorage.getItem("vehiculos")){
+        localStorage.setItem("vehiculos", "["+JSON.stringify(vehiculo)+"]");
+    }else{
+        let vehiculos = JSON.parse(localStorage.getItem("vehiculos"));
+        vehiculos.push(vehiculo);
+        
+        localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
+    }
 }
 
 function AdministrarValidaciones() {

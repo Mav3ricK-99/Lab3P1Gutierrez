@@ -1,0 +1,534 @@
+{
+  "vehiculos": [
+    {
+      "id": 4,
+      "titulo": "Seville",
+      "tipoVenta": "alquiler",
+      "descripcion": "in hac habitasse",
+      "precio": 3522.13,
+      "cantPuertas": 3,
+      "kilometraje": 84160,
+      "potencia": 262
+    },
+    {
+      "id": 5,
+      "titulo": "Q",
+      "tipoVenta": "alquiler",
+      "descripcion": "lectus pellentesque eget nunc donec",
+      "precio": 4082.05,
+      "cantPuertas": 1,
+      "kilometraje": 88400,
+      "potencia": 147
+    },
+    {
+      "id": 6,
+      "titulo": "S-Class",
+      "tipoVenta": "alquiler",
+      "descripcion": "aliquam erat volutpat in congue",
+      "precio": 847.47,
+      "cantPuertas": 5,
+      "kilometraje": 45716,
+      "potencia": 272
+    },
+    {
+      "id": 7,
+      "titulo": "Continental",
+      "tipoVenta": "alquiler",
+      "descripcion": "vulputate ut ultrices vel",
+      "precio": 46.12,
+      "cantPuertas": 4,
+      "kilometraje": 59443,
+      "potencia": 128
+    },
+    {
+      "id": 8,
+      "titulo": "Swift",
+      "tipoVenta": "alquiler",
+      "descripcion": "in faucibus orci luctus et ultrices posuere cubilia",
+      "precio": 1183.82,
+      "cantPuertas": 5,
+      "kilometraje": 69385,
+      "potencia": 77
+    },
+    {
+      "id": 9,
+      "titulo": "Liberty",
+      "tipoVenta": "alquiler",
+      "descripcion": "erat curabitur gravida nisi at nibh in hac habitasse platea",
+      "precio": 3720.37,
+      "cantPuertas": 3,
+      "kilometraje": 19934,
+      "potencia": 157
+    },
+    {
+      "id": 10,
+      "titulo": "Savana 3500",
+      "tipoVenta": "alquiler",
+      "descripcion": "congue diam id ornare imperdiet",
+      "precio": 4057.25,
+      "cantPuertas": 2,
+      "kilometraje": 47310,
+      "potencia": 196
+    },
+    {
+      "id": 11,
+      "titulo": "Continental GTC",
+      "tipoVenta": "venta",
+      "descripcion": "placerat praesent blandit nam nulla",
+      "precio": 1859.26,
+      "cantPuertas": 2,
+      "kilometraje": 28095,
+      "potencia": 220
+    },
+    {
+      "id": 12,
+      "titulo": "2500",
+      "tipoVenta": "venta",
+      "descripcion": "nisi eu orci",
+      "precio": 4302.03,
+      "cantPuertas": 4,
+      "kilometraje": 82826,
+      "potencia": 90
+    },
+    {
+      "id": 13,
+      "titulo": "Tundra",
+      "tipoVenta": "venta",
+      "descripcion": "mauris eget massa tempor convallis nulla neque libero",
+      "precio": 1151.41,
+      "cantPuertas": 3,
+      "kilometraje": 96556,
+      "potencia": 266
+    },
+    {
+      "id": 14,
+      "titulo": "Coachbuilder",
+      "tipoVenta": "alquiler",
+      "descripcion": "interdum venenatis turpis enim",
+      "precio": 1564.16,
+      "cantPuertas": 3,
+      "kilometraje": 97628,
+      "potencia": 255
+    },
+    {
+      "id": 15,
+      "titulo": "FJ Cruiser",
+      "tipoVenta": "alquiler",
+      "descripcion": "augue a suscipit nulla",
+      "precio": 4901.8,
+      "cantPuertas": 1,
+      "kilometraje": 84762,
+      "potencia": 142
+    },
+    {
+      "id": 16,
+      "titulo": "E250",
+      "tipoVenta": "alquiler",
+      "descripcion": "phasellus sit amet erat",
+      "precio": 3068.39,
+      "cantPuertas": 3,
+      "kilometraje": 29349,
+      "potencia": 167
+    },
+    {
+      "id": 17,
+      "titulo": "Caprice Classic",
+      "tipoVenta": "alquiler",
+      "descripcion": "dui maecenas tristique est et tempus semper est",
+      "precio": 1013.54,
+      "cantPuertas": 1,
+      "kilometraje": 68853,
+      "potencia": 273
+    },
+    {
+      "id": 18,
+      "titulo": "Express 1500",
+      "tipoVenta": "venta",
+      "descripcion": "tempus vel pede morbi porttitor lorem id ligula",
+      "precio": 430.57,
+      "cantPuertas": 2,
+      "kilometraje": 90129,
+      "potencia": 174
+    },
+    {
+      "id": 19,
+      "titulo": "Thunderbird",
+      "tipoVenta": "alquiler",
+      "descripcion": "accumsan odio curabitur convallis duis consequat dui nec nisi volutpat",
+      "precio": 2695.51,
+      "cantPuertas": 4,
+      "kilometraje": 20906,
+      "potencia": 121
+    },
+    {
+      "id": 20,
+      "titulo": "Tahoe",
+      "tipoVenta": "venta",
+      "descripcion": "et ultrices posuere cubilia curae duis",
+      "precio": 404.39,
+      "cantPuertas": 5,
+      "kilometraje": 11188,
+      "potencia": 281
+    },
+    {
+      "id": 21,
+      "titulo": "Vantage",
+      "tipoVenta": "venta",
+      "descripcion": "sem duis aliquam convallis nunc",
+      "precio": 1255.91,
+      "cantPuertas": 4,
+      "kilometraje": 1728,
+      "potencia": 190
+    },
+    {
+      "id": 22,
+      "titulo": "Elan",
+      "tipoVenta": "alquiler",
+      "descripcion": "turpis elementum ligula vehicula",
+      "precio": 976.26,
+      "cantPuertas": 1,
+      "kilometraje": 30721,
+      "potencia": 187
+    },
+    {
+      "id": 23,
+      "titulo": "S4",
+      "tipoVenta": "venta",
+      "descripcion": "volutpat erat quisque erat eros viverra eget congue",
+      "precio": 2446.64,
+      "cantPuertas": 2,
+      "kilometraje": 16883,
+      "potencia": 265
+    },
+    {
+      "id": 24,
+      "titulo": "5000CS Quattro",
+      "tipoVenta": "alquiler",
+      "descripcion": "nulla sed accumsan felis ut at dolor quis odio",
+      "precio": 1991.23,
+      "cantPuertas": 3,
+      "kilometraje": 7418,
+      "potencia": 108
+    },
+    {
+      "id": 25,
+      "titulo": "Bonneville",
+      "tipoVenta": "alquiler",
+      "descripcion": "turpis a pede posuere nonummy integer non",
+      "precio": 612.09,
+      "cantPuertas": 1,
+      "kilometraje": 48086,
+      "potencia": 163
+    },
+    {
+      "id": 26,
+      "titulo": "Corvette",
+      "tipoVenta": "alquiler",
+      "descripcion": "quam turpis adipiscing lorem",
+      "precio": 3063.31,
+      "cantPuertas": 4,
+      "kilometraje": 19035,
+      "potencia": 192
+    },
+    {
+      "id": 27,
+      "titulo": "350Z",
+      "tipoVenta": "venta",
+      "descripcion": "in quam fringilla rhoncus mauris enim leo rhoncus sed",
+      "precio": 644.9,
+      "cantPuertas": 2,
+      "kilometraje": 8238,
+      "potencia": 129
+    },
+    {
+      "id": 28,
+      "titulo": "Flex",
+      "tipoVenta": "alquiler",
+      "descripcion": "lacus at turpis donec",
+      "precio": 1460.72,
+      "cantPuertas": 4,
+      "kilometraje": 50642,
+      "potencia": 186
+    },
+    {
+      "id": 29,
+      "titulo": "Corvette",
+      "tipoVenta": "alquiler",
+      "descripcion": "sem sed sagittis nam congue",
+      "precio": 2872.58,
+      "cantPuertas": 5,
+      "kilometraje": 82795,
+      "potencia": 105
+    },
+    {
+      "id": 30,
+      "titulo": "RL",
+      "tipoVenta": "alquiler",
+      "descripcion": "pretium nisl ut volutpat sapien arcu sed augue",
+      "precio": 1648.23,
+      "cantPuertas": 5,
+      "kilometraje": 74932,
+      "potencia": 174
+    },
+    {
+      "id": 31,
+      "titulo": "Sportage",
+      "tipoVenta": "venta",
+      "descripcion": "sed lacus morbi sem mauris laoreet ut",
+      "precio": 2131.8,
+      "cantPuertas": 2,
+      "kilometraje": 68137,
+      "potencia": 186
+    },
+    {
+      "id": 32,
+      "titulo": "JUKE",
+      "tipoVenta": "venta",
+      "descripcion": "massa volutpat convallis morbi",
+      "precio": 4459.46,
+      "cantPuertas": 2,
+      "kilometraje": 26467,
+      "potencia": 190
+    },
+    {
+      "id": 33,
+      "titulo": "Ciera",
+      "tipoVenta": "venta",
+      "descripcion": "non ligula pellentesque ultrices phasellus id sapien in",
+      "precio": 3717.64,
+      "cantPuertas": 3,
+      "kilometraje": 5783,
+      "potencia": 222
+    },
+    {
+      "id": 34,
+      "titulo": "Titan",
+      "tipoVenta": "alquiler",
+      "descripcion": "ipsum ac tellus semper interdum mauris ullamcorper",
+      "precio": 4266.62,
+      "cantPuertas": 3,
+      "kilometraje": 94963,
+      "potencia": 176
+    },
+    {
+      "id": 35,
+      "titulo": "Golf",
+      "tipoVenta": "alquiler",
+      "descripcion": "fermentum justo nec condimentum neque",
+      "precio": 1004.24,
+      "cantPuertas": 4,
+      "kilometraje": 7382,
+      "potencia": 124
+    },
+    {
+      "id": 36,
+      "titulo": "RVR",
+      "tipoVenta": "alquiler",
+      "descripcion": "sapien placerat ante",
+      "precio": 2467.34,
+      "cantPuertas": 2,
+      "kilometraje": 3549,
+      "potencia": 222
+    },
+    {
+      "id": 37,
+      "titulo": "Corvette",
+      "tipoVenta": "alquiler",
+      "descripcion": "non interdum in ante vestibulum ante",
+      "precio": 4832.35,
+      "cantPuertas": 1,
+      "kilometraje": 56459,
+      "potencia": 212
+    },
+    {
+      "id": 38,
+      "titulo": "Skyhawk",
+      "tipoVenta": "alquiler",
+      "descripcion": "augue luctus tincidunt nulla mollis molestie lorem quisque",
+      "precio": 899.9,
+      "cantPuertas": 4,
+      "kilometraje": 21291,
+      "potencia": 223
+    },
+    {
+      "id": 39,
+      "titulo": "CLK-Class",
+      "tipoVenta": "alquiler",
+      "descripcion": "quis lectus suspendisse potenti in eleifend",
+      "precio": 808.19,
+      "cantPuertas": 5,
+      "kilometraje": 37594,
+      "potencia": 274
+    },
+    {
+      "id": 40,
+      "titulo": "Contour",
+      "tipoVenta": "venta",
+      "descripcion": "ligula in lacus curabitur at ipsum ac",
+      "precio": 3977.76,
+      "cantPuertas": 3,
+      "kilometraje": 76913,
+      "potencia": 154
+    },
+    {
+      "id": 41,
+      "titulo": "SC",
+      "tipoVenta": "venta",
+      "descripcion": "augue vestibulum rutrum rutrum neque aenean auctor gravida sem",
+      "precio": 4683.9,
+      "cantPuertas": 2,
+      "kilometraje": 13955,
+      "potencia": 179
+    },
+    {
+      "id": 42,
+      "titulo": "Spyder",
+      "tipoVenta": "venta",
+      "descripcion": "suspendisse ornare consequat lectus in est risus",
+      "precio": 1867.31,
+      "cantPuertas": 5,
+      "kilometraje": 42595,
+      "potencia": 211
+    },
+    {
+      "id": 43,
+      "titulo": "Challenger",
+      "tipoVenta": "venta",
+      "descripcion": "proin at turpis a pede posuere nonummy",
+      "precio": 3093,
+      "cantPuertas": 3,
+      "kilometraje": 49753,
+      "potencia": 92
+    },
+    {
+      "id": 44,
+      "titulo": "Sonata",
+      "tipoVenta": "alquiler",
+      "descripcion": "eget massa tempor convallis",
+      "precio": 1881.9,
+      "cantPuertas": 4,
+      "kilometraje": 5097,
+      "potencia": 134
+    },
+    {
+      "id": 45,
+      "titulo": "Continental Mark VII",
+      "tipoVenta": "venta",
+      "descripcion": "viverra pede ac diam cras",
+      "precio": 3195.92,
+      "cantPuertas": 3,
+      "kilometraje": 84070,
+      "potencia": 256
+    },
+    {
+      "id": 46,
+      "titulo": "MKS",
+      "tipoVenta": "venta",
+      "descripcion": "commodo vulputate justo in blandit ultrices enim lorem ipsum dolor",
+      "precio": 3251.32,
+      "cantPuertas": 2,
+      "kilometraje": 48765,
+      "potencia": 165
+    },
+    {
+      "id": 47,
+      "titulo": "Countach",
+      "tipoVenta": "alquiler",
+      "descripcion": "semper rutrum nulla nunc purus phasellus in felis",
+      "precio": 3533.19,
+      "cantPuertas": 3,
+      "kilometraje": 80998,
+      "potencia": 245
+    },
+    {
+      "id": 48,
+      "titulo": "tC",
+      "tipoVenta": "venta",
+      "descripcion": "iaculis justo in hac habitasse platea dictumst",
+      "precio": 195.23,
+      "cantPuertas": 3,
+      "kilometraje": 40898,
+      "potencia": 163
+    },
+    {
+      "id": 49,
+      "titulo": "4Runner",
+      "tipoVenta": "alquiler",
+      "descripcion": "sapien urna pretium",
+      "precio": 3930.35,
+      "cantPuertas": 1,
+      "kilometraje": 81478,
+      "potencia": 87
+    },
+    {
+      "id": 50,
+      "titulo": "2500",
+      "tipoVenta": "venta",
+      "descripcion": "amet sapien dignissim vestibulum vestibulum ante ipsum primis in",
+      "precio": 4142.88,
+      "cantPuertas": 3,
+      "kilometraje": 48686,
+      "potencia": 149
+    },
+    {
+      "id": 51,
+      "titulo": "Pilot",
+      "tipoVenta": "venta",
+      "descripcion": "tortor duis mattis egestas metus aenean",
+      "precio": 4639.74,
+      "cantPuertas": 5,
+      "kilometraje": 83741,
+      "potencia": 259
+    },
+    {
+      "id": 52,
+      "titulo": "4Runner",
+      "tipoVenta": "venta",
+      "descripcion": "sapien a libero nam dui proin leo odio porttitor",
+      "precio": 4701.55,
+      "cantPuertas": 1,
+      "kilometraje": 16645,
+      "potencia": 264
+    },
+    {
+      "id": 53,
+      "titulo": "Grand Prix",
+      "tipoVenta": "alquiler",
+      "descripcion": "mus etiam vel augue vestibulum rutrum rutrum neque aenean",
+      "precio": 713.64,
+      "cantPuertas": 5,
+      "kilometraje": 31913,
+      "potencia": 191
+    },
+    {
+      "id": 54,
+      "titulo": "7 Series",
+      "tipoVenta": "venta",
+      "descripcion": "volutpat eleifend donec",
+      "precio": 2312.28,
+      "cantPuertas": 2,
+      "kilometraje": 9335,
+      "potencia": 184
+    },
+    {
+      "id": 55,
+      "titulo": "Thunderbird",
+      "tipoVenta": "venta",
+      "descripcion": "sapien arcu sed augue aliquam",
+      "precio": 3877.21,
+      "cantPuertas": 1,
+      "kilometraje": 15389,
+      "potencia": 94
+    },
+    {
+      "id": 56,
+      "titulo": "9000",
+      "tipoVenta": "alquiler",
+      "descripcion": "non sodales sed tincidunt eu felis fusce posuere felis",
+      "precio": 1926.7,
+      "cantPuertas": 3,
+      "kilometraje": 82517,
+      "potencia": 268
+    }
+  ]
+}

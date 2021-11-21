@@ -287,6 +287,32 @@ label{
     color: gray;
 }
 
+#filtros{
+    width: 100%;
+}
+#filtros h3{
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: .33em;
+    padding: .9rem;
+    font-family: "Roboto-Bold", Arial;
+
+}
+#filtrosSelect{
+
+    display: flex;
+}
+
+#filtrosSelect select{
+    padding: 5px;
+    background: ghostwhite;
+    border-radius: 5px;
+}
+
+#filtrosSelect{
+    justify-content: space-around;
+    font-family: "Roboto-Bold", Arial;
+}
 
 
 
@@ -321,6 +347,11 @@ label{
         padding:0;
         left:0;
         font-size:14px;
+    }
+
+    thead div{
+        display: flex;
+        
     }
 
     #errorSection li{
