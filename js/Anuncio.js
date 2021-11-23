@@ -9,4 +9,11 @@ class Anuncio {
 
     }
 
+    static getPromedioPrecio(veh){
+
+        let total = 0;
+        veh.forEach(el => { total += el.precio })
+
+        return total;
+    }
   }

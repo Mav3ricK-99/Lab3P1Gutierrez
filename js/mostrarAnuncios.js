@@ -35,7 +35,7 @@ function armarAnuncio(objs, obj_name) {
         divUnAnuncio.classList = "card"
 
         let h3Titulo = document.createElement("h3");
-        h3Titulo.classList = "card-title"
+        h3Titulo.classList = "card-title" //Clases BOOTSTRAP
         let pDescripcion = document.createElement("p");
         pDescripcion.classList = "card-subtitle mb-2 text-muted"
         let pPrecio = document.createElement("p");

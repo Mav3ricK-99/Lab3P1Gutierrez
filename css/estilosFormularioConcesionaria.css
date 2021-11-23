@@ -202,51 +202,6 @@ label{
     align-items: center;
   }
 
-  #tabla_vehiculo{
-
-    margin-top:20px;
-    margin-bottom: 60px;
-    width: 37vw;
-
-    border-collapse: collapse;
-    font-family: Calibri, Arial;
-
-    color: white;
-  }
-
-  #tabla_vehiculo th:last-child{
-      border-radius: 0 12px 0 0;
-  }
-
-  #tabla_vehiculo th:first-child{
-    border-radius: 12px 0 0 0;
-}
-
-  #tabla_vehiculo th{
-      padding: .5rem;
-      font-size: 21px;
-
-      background: rgb(30, 240, 170);
-      font-weight: 700;
- }
-
-  #tabla_vehiculo td{
-
-    text-align: center;
-    left: 20px;
-    font-size: 20px;
-    cursor: pointer;
-    
-  }
-
-  .even{
-    background: rgb(18, 189, 132);
-  }
-
-  .odd{
-    background: rgb(16, 224, 155);
-  }
-
   #divBotones > button{
 
     width: min-content;

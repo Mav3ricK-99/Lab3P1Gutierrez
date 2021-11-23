@@ -26,7 +26,7 @@ async function administrarTabla() {
     } else {
         let tabla = armarTabla(vehiculos, "vehiculo");
         armarSeccionTabla(tabla, vehiculos)
-        agregarTotalPrecioAutos(vehiculos);
+        mostrarPromedioPrecios(vehiculos)
     }
 }
 
@@ -70,6 +70,7 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
 
     let dice = "odd";
     let tabla = document.createElement("table");
+    tabla.className = "table table-dark"
     let tbody = document.createElement("tbody");
     let thead = document.createElement("thead");
 
@@ -80,13 +81,13 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
         let trProducto = document.createElement("tr");
         if (dice == "odd") {
             dice = "even";
-            trProducto.className = "odd";
-        } else {
+            trProducto.className = "table-active";
+        }else{
             dice = "odd";
-            trProducto.className = "even";
         }
         trProducto.setAttribute("data-" + nombreObjs + "ID", obj.id);
 
+        let trEncabezadoTabla = document.createElement("tr");
         Object.keys(obj).forEach((key) => {
 
             if (key.includes("id")) {
@@ -94,7 +95,9 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
             }
             if (primeraVezIterando == true) {
 
+
                 let thProducto = document.createElement("th");
+                thead.className = "table-light";
 
                 let nombreCol = key.replace(key[0], key[0].toUpperCase());
                 let checkInput = "<input type='checkbox' checked id=th-" + key + " class='thFiltro'></input>";
@@ -107,7 +110,8 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
                 }
 
                 thProducto.innerHTML = nombreCol + checkInput;
-                thead.appendChild(thProducto);
+                
+                trEncabezadoTabla.appendChild(thProducto)
             }
 
             let tdProducto = document.createElement("td");
@@ -126,14 +130,19 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
 
         })
 
+        if(primeraVezIterando == true) {
+            thead.appendChild(trEncabezadoTabla);
+        }
         primeraVezIterando = false;
+        
+        
         tbody.appendChild(trProducto);
 
     })
 
     tabla.appendChild(thead);
     tabla.appendChild(tbody);
-    tabla.id = "tabla_" + nombreObjs;
+    //tabla.id = "tabla_" + nombreObjs;
     return tabla;
 }
 
@@ -247,7 +256,7 @@ function filtrarTabla(e) {
 
         let tabla = armarTabla(veh, "vehiculo", colHideada);
         armarSeccionTabla(tabla)
-        agregarTotalPrecioAutos(veh);
+        mostrarPromedioPrecios(veh)
     }
 
 }
@@ -276,11 +285,15 @@ function filtrarColumna(e) {
     }
 }
 
-function agregarTotalPrecioAutos(veh) {
+function mostrarPromedioPrecios(vehiculos){
 
-    let total = 0;
-    veh.forEach(el => { total += el.precio })
-
-    let promeDIOS = document.getElementById("promedios");
-    promeDIOS.innerText = "PROMEDIO DE PRECIOS: " + (total / veh.length).toFixed(2);
+    let promedioPrecios = 0;
+    if(selectFiltro.value != "todos"){
+            promedioPrecios = Anuncio.getPromedioPrecio(vehiculos);
+            promedioPrecios = promedioPrecios.toFixed(2)
+        }else{
+            promedioPrecios = "N/A";
+        }
+        let promeDIOS = document.getElementById("promedios");
+        promeDIOS.innerText = "PROMEDIO DE PRECIOS: " + promedioPrecios;
 }
