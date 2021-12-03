@@ -1,16 +1,6 @@
 {
   "vehiculos": [
     {
-      "id": 4,
-      "titulo": "Seville",
-      "tipoVenta": "alquiler",
-      "descripcion": "in hac habitasse",
-      "precio": 3522.13,
-      "cantPuertas": 3,
-      "kilometraje": 84160,
-      "potencia": 262
-    },
-    {
       "id": 5,
       "titulo": "Q",
       "tipoVenta": "alquiler",
@@ -21,16 +11,6 @@
       "potencia": 147
     },
     {
-      "id": 6,
-      "titulo": "S-Class",
-      "tipoVenta": "alquiler",
-      "descripcion": "aliquam erat volutpat in congue",
-      "precio": 847.47,
-      "cantPuertas": 5,
-      "kilometraje": 45716,
-      "potencia": 272
-    },
-    {
       "id": 7,
       "titulo": "Continental",
       "tipoVenta": "alquiler",
@@ -39,16 +19,6 @@
       "cantPuertas": 4,
       "kilometraje": 59443,
       "potencia": 128
-    },
-    {
-      "id": 8,
-      "titulo": "Swift",
-      "tipoVenta": "alquiler",
-      "descripcion": "in faucibus orci luctus et ultrices posuere cubilia",
-      "precio": 1183.82,
-      "cantPuertas": 5,
-      "kilometraje": 69385,
-      "potencia": 77
     },
     {
       "id": 9,

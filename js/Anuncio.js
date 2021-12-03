@@ -14,6 +14,6 @@ class Anuncio {
         let total = 0;
         veh.forEach(el => { total += el.precio })
 
-        return total;
+        return parseFloat(total);
     }
   }

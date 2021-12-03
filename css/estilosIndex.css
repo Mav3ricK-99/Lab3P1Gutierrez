@@ -16,8 +16,8 @@
 
 header{
     background-image: url("../Imagenes/porchesBanner.jpg");
-    background-size: cover;
     background-repeat: no-repeat;
+    background-position-y:center;
 }
 
 #headerNavegacionLogo{
@@ -60,7 +60,6 @@ header{
 
     margin-top:10rem;
     margin-left: 3vw;
-    margin-bottom: 2vw;
     user-select: none;
 }
 
@@ -69,7 +68,7 @@ header{
     color: white;
 
     font-family: "Roboto-Bold";
-    margin-bottom: 1vw;
+    padding-bottom: 2vw;
     font-size: 40px;
 }
 

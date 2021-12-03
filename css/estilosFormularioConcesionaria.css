@@ -149,6 +149,11 @@ label{
     background-color: rgb(16, 173, 121);
 }
 
+#btnLimpiar{
+    margin-top: 10px;
+    background-color: rgb(22, 28, 107);
+}
+
 .mensajeTabla{
     color:darkgray;
     font-size: 22px;
@@ -223,7 +228,7 @@ label{
 
     width: 15.8vw;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
 
   #btnEliminar{

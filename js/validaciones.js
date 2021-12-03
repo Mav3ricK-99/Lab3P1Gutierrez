@@ -9,10 +9,10 @@ async function enviarAnuncio(e) {
     let titulo = document.getElementById('titulo').value;
     let transaccion = GetValueChecked('input[type=radio]');
     let descripcion = document.getElementById('descripcion').value;
-    let precio = document.getElementById('precio').value;
-    let puertas = document.getElementById('puertas').value;
-    let kilometros = document.getElementById('kilometros').value;
-    let potencia = document.getElementById('potencia').value;
+    let precio = parseFloat(document.getElementById('precio').value);
+    let puertas = parseInt(document.getElementById('puertas').value);
+    let kilometros = parseFloat(document.getElementById('kilometros').value);
+    let potencia = parseInt(document.getElementById('potencia').value);
 
     let vehiculo = new Anuncio_Auto(titulo, transaccion, descripcion, precio, puertas, kilometros, potencia);
 
