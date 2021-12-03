@@ -1,16 +1,6 @@
 {
   "vehiculos": [
     {
-      "id": 5,
-      "titulo": "Q",
-      "tipoVenta": "alquiler",
-      "descripcion": "lectus pellentesque eget nunc donec",
-      "precio": 4082.05,
-      "cantPuertas": 1,
-      "kilometraje": 88400,
-      "potencia": 147
-    },
-    {
       "id": 7,
       "titulo": "Continental",
       "tipoVenta": "alquiler",

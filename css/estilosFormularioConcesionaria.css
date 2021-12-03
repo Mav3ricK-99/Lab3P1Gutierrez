@@ -261,17 +261,12 @@ label{
 #filtrosSelect{
 
     display: flex;
-}
-
-#filtrosSelect select{
-    padding: 5px;
-    background: ghostwhite;
-    border-radius: 5px;
-}
-
-#filtrosSelect{
     justify-content: space-around;
     font-family: "Roboto-Bold", Arial;
+}
+
+#selectFiltro{
+    width: 5vw;
 }
 
 

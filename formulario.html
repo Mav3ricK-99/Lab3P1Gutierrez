@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./css/estilosFormularioConcesionaria.css">
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        
     </head>
     <body>
         <header>
@@ -74,19 +75,32 @@
             </section>
 
             <section id="seccionTabla">
-
                 <article id="filtros">
                     <h3>Filtros</h3>
                     <div id="filtrosSelect">
-                        <select id="selectFiltro">
-                            <option value="todos" selected>Todos</option>
-                            <option value="alquiler">Alquiler</option>
-                            <option value="venta">Venta</option>
+
+                        <select id="selectFiltro" class="form-select">
+                            <option class="dropdown-item" value="todos" selected>Todos</option>
+                            <option class="dropdown-item" value="alquiler">Alquiler</option>
+                            <option class="dropdown-item" value="venta">Venta</option>
                         </select>
+
                         <div id="promedios">
                             PROMEDIO DE PRECIOS:
 
                         </div>
+                        <div id="mayorPrecio">
+                            MAYOR PRECIO:
+                        </div>    
+                        
+                        <div id="menorPrecio">
+                            MENOR PRECIO:
+                        </div>
+
+                        <div id="promedioPotencia">
+                            PROMEDIO POTENCIA:
+                        </div>
+
                     </div>
                 </article>
                 <div id="spinner">
@@ -130,11 +144,13 @@
             </footer>
         </main>
         <!--No puedo Usar import/export porque Chrome no te deja importar archivos de 'LocalHost' Aun con(type="module")-->
+        
         <script src="./node_modules/axios/dist/axios.min.js"></script>
         <script src="./js/peticiones.js"></script>
         <script src="./js/Anuncio.js" defer></script>
         <script src="./js/Anuncio_Auto.js" defer></script>
         <script src="./js/validaciones.js" defer></script>
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
         <script src="./js/app.js" defer></script>
     </body>
 </html>

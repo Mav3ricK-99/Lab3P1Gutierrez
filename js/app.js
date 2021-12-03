@@ -28,7 +28,12 @@ async function administrarTabla() {
     if (!vehiculos || vehiculos.length < 1) {
         armarDivError()
     } else {
-        let tabla = armarTabla(vehiculos, "vehiculo");
+        var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
+        if(colsOcultas != null && colsOcultas.length > 0){
+            vehiculos.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
+        }
+        
+        let tabla = armarTabla(vehiculos, "vehiculo", colsOcultas);//
         armarSeccionTabla(tabla, vehiculos)
         mostrarPromedioPrecios(vehiculos)
     }
@@ -106,6 +111,7 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
                 let nombreCol = key.replace(key[0], key[0].toUpperCase());
                 let checkInput = "<input type='checkbox' checked id=th-" + key + " class='thFiltro'></input>";
                 
+                //console.log(colFiltradas);
                 if (colFiltradas) {
                     colFiltradas.forEach(el => {
                         if (el == key) {
@@ -234,9 +240,9 @@ function filtrarVehiculos(veh) {
 function filtrarTabla(e) {
 
     let veh = localStorage.getItem("vehiculos");
-    
+   
     let columnasOcultas = getColumnasOcultas();
-
+    
     let tablaExistente = document.getElementById("tabla_vehiculo");
     if (veh && tablaExistente != null) {
         veh = JSON.parse(veh);
@@ -250,6 +256,9 @@ function filtrarTabla(e) {
         let tabla = armarTabla(veh, "vehiculo", columnasOcultas);
         armarSeccionTabla(tabla)
         mostrarPromedioPrecios(veh)
+        mostrarMaximoPrecio(veh);
+        mostrarMinimoPrecio(veh);
+        mostrarPromedioPotencia(veh);
     }
 
 }
@@ -259,6 +268,7 @@ function filtrarColumna(e) {
     let veh = localStorage.getItem("vehiculos");
     
     let columnasOcultas = getColumnasOcultas();
+    localStorage.setItem("columnasOcultas", JSON.stringify(columnasOcultas));
 
     let tablaExistente = document.getElementById("tabla_vehiculo");
     if (veh && tablaExistente != null) {
@@ -303,4 +313,36 @@ function mostrarPromedioPrecios(vehiculos) {
     }
     let promeDIOS = document.getElementById("promedios");
     promeDIOS.innerText = "PROMEDIO DE PRECIOS: " + promedioPrecios;
+}
+
+function mostrarMaximoPrecio(vehiculos) {
+
+    let cocheMaximoPrecio = vehiculos.reduce(function(anterior, actual) {
+        return (anterior.precio > actual.precio) ? anterior : actual
+    })
+    
+    let mayorPrecioDiv = document.getElementById("mayorPrecio");
+    mayorPrecioDiv.innerText = "MAYOR PRECIO: " + cocheMaximoPrecio.precio;
+      
+}
+
+function mostrarMinimoPrecio(vehiculos) {
+
+    const cocheMenorPrecio = vehiculos.reduce(function(anterior, actual) {
+        return (anterior.precio < actual.precio) ? anterior : actual
+    })
+    
+    let menorPrecioDiv = document.getElementById("menorPrecio");
+    menorPrecioDiv.innerText = "MENOR PRECIO: " + cocheMenorPrecio.precio;
+      
+}
+
+function mostrarPromedioPotencia(vehiculos){
+
+    let totalPotencia = 0;
+    let sumaTotalPotencia = vehiculos.reduce((anterior, cocheActual) => totalPotencia += cocheActual.potencia);
+    let promedioPotencia = sumaTotalPotencia / vehiculos.length;
+
+    let promedioPotenciaDiv = document.getElementById("promedioPotencia");
+    promedioPotenciaDiv.innerText = "PROMEDIO POTENCIA: " + promedioPotencia.toFixed(2);
 }
