@@ -133,3 +133,24 @@ header{
     padding: .5rem;
     background-color: rgba(236, 242, 245, 0.267);
 }
+
+#ultimosTresButton{
+
+    background: rgb(54, 235, 30);
+    color: white;
+    padding: 15px;
+    font-family: "Roboto-Bold";
+    font-weight: 800;
+    font-size:17px;
+    max-width: 12vw;
+
+    outline: none;
+    border:none;
+}
+
+#seccionUltimosAnuncios{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

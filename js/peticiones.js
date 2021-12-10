@@ -57,3 +57,17 @@ const eliminarVehiculo = async (id_veh) => {
         throw new Error("Hubo un error al eliminar el vehiculo " + e.message)
     }
 }
+
+const modificarVehiculo = async (vehiculo) => {
+
+    try {
+        await axios.put(base_url + "/" + vehiculo.id, vehiculo)
+            .then()
+            .catch(e => {
+                throw new Error("Hubo un error al modificar el vehiculo " + e.message)
+            })
+
+    } catch (e) {
+        throw new Error("Hubo un error al modificar el vehiculo " + e.message)
+    }
+}

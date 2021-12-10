@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Listado de coches</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./css/estilosIndex.css">
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-utilities.min.css">
@@ -36,8 +35,18 @@
             <section id="anuncios">
                 <h2 id="tituloAnuncios">Autos en Venta y Alquiler</h2>
             </section>
+
+            <section id="graficos">
+                <canvas id="graficoVisitas" width="700" height="500"></canvas>
+            </section>
+
+            <section id="seccionUltimosAnuncios">
+                <button id="ultimosTresButton">Mostrar ultimos 3 anuncios</button>
+            </section>
         </main>
         
+        <script src="./node_modules/chart.js/dist/chart.min.js"></script>
+        <script src="./node_modules/chart.js/dist/chart.js"></script>
         <script src="./node_modules/axios/dist/axios.min.js"></script>
         <script src="./js/peticiones.js"></script>
         <script src="./js/mostrarAnuncios.js" async defer></script>

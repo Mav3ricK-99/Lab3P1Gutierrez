@@ -87,6 +87,7 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
     let primeraVezIterando = true;
 
     objs.forEach((obj) => {
+        delete obj.fechaAnuncio;
 
         let trProducto = document.createElement("tr");
         if (dice == "odd") {
@@ -339,7 +340,7 @@ function mostrarMinimoPrecio(vehiculos) {
 
 function mostrarPromedioPotencia(vehiculos){
 
-    let totalPotencia = 0;
+    let totalPotencia = vehiculos[0].potencia;
     let sumaTotalPotencia = vehiculos.reduce((anterior, cocheActual) => totalPotencia += cocheActual.potencia);
     let promedioPotencia = sumaTotalPotencia / vehiculos.length;
 

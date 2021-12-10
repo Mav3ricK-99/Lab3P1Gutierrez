@@ -1,3 +1,6 @@
+let ultimosTresButton = document.getElementById("ultimosTresButton");
+ultimosTresButton.addEventListener("click", mostrarUltimosAnuncios, false);
+
 async function mostrarAnuncios() {
 
     let vehiculos = {}
@@ -32,7 +35,7 @@ function armarAnuncio(objs, obj_name) {
 
     objs.forEach((el) => {
         let divUnAnuncio = document.createElement("div");
-        divUnAnuncio.classList = "card"
+        divUnAnuncio.classList = "card veh-"+el.id;
 
         let h3Titulo = document.createElement("h3");
         h3Titulo.classList = "card-title" //Clases BOOTSTRAP
@@ -105,3 +108,101 @@ function armarAnuncio(objs, obj_name) {
 }
 
 mostrarAnuncios();
+
+function getMaximoVisitasById(){
+
+    let visitados = JSON.parse(localStorage.getItem("anunciosVisitados"));
+    var valoresRepetidos = visitados.reduce((counter, value) => {if(!counter[value]) counter[value] = 1; else counter[value]++; return counter}, []);
+    let repetidos = [];
+    Object.entries(valoresRepetidos).forEach(counter =>repetidos.push(counter[1]))
+    
+    return repetidos;
+}
+
+function mostrarGraficoVisitas(){
+
+    getMaximoVisitasById();
+    const ctx = document.getElementById('graficoVisitas').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['1', '2', '3', '4', '5'],
+            datasets: [{
+                label: '# of Clicks',
+                data: getMaximoVisitasById(),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+}
+
+mostrarGraficoVisitas();
+
+async function mostrarUltimosAnuncios(){
+
+    if(document.getElementById("ultimosAnuncios") != null){
+        return 0
+    }
+    let vehiculos = {}
+    await getVehiculos().then((data) => {
+        vehiculos = data;
+    })
+
+    if (vehiculos && vehiculos.length > -1) {
+        
+        var totalAutos = vehiculos.length;
+        vehiculos.splice(0, totalAutos-3);
+
+        let anuncios = armarAnuncio(vehiculos, "vehiculo");
+        anuncios.id = "ultimosAnuncios";
+        document.getElementById("seccionUltimosAnuncios").appendChild(anuncios);
+        vehiculos.forEach((el) => {
+
+            let fechaHoy = new Date();
+
+            if(el.fechaAnuncio == null){
+                el.fechaAnuncio = fechaHoy;
+                agregarFechaVehiculo(el);
+                 
+            }
+
+            document.querySelectorAll(".veh-"+el.id).forEach((el) => el.insertAdjacentHTML("afterbegin",fechaHoy.toDateString()));
+
+        });
+
+    } 
+}
+
+async function agregarFechaVehiculo(el){
+
+    if(el.hasOwnProperty("fechaAnuncio")){
+        await modificarVehiculo(el).then(() => {
+            console.log("Vehiculo modificado")
+        }).catch(e => {
+            alert(e.message)
+            throw new Error(e.message);
+        });   
+    }
+}
