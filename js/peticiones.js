@@ -1,73 +1,29 @@
-const base_url = "http://localhost:3000/vehiculos"
+//const base_url = "http://localhost:5000/Personas"
 
-const getVehiculos = async () => {
+const getPersonas = () => {
 
-    var vehiculos;
-    try {
-        await axios.get(base_url)
-            .then(response => {
-                vehiculos = response.data;
-                if (response.status >= 200 && response.status < 300) {
-                    return vehiculos
-                }
-            })
-            .catch(e => {
-                throw new Error("Hubo un error al traer los vehiculos " + e.message)
-            })
-
-    } catch (e) {
-        throw new Error("Hubo un error al traer los vehiculos " + e.message)
-    }
-
-    return vehiculos
+    let personas = localStorage.getItem("personas");
+    return personas == null ? [] : JSON.parse(personas);
 }
 
-const agregarVehiculo = async (vehiculo) => {
+const agregarPersona = (persona) => {
 
-    try {
-        await axios.post(base_url + "/", vehiculo)
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    alert("Vehiculo agregado")
-                }
-            })
-            .catch(e => {
-                throw new Error("Hubo un error al agregar el vehiculo  " + e.message)
-            })
+    let personas = getPersonas();
+    persona.id = personas.length;
+    personas.push(persona);
 
-    } catch (e) {
-        throw new Error("Hubo un error al agregar el vehiculo " + e.message)
-    }
+    localStorage.setItem("personas", JSON.stringify(personas));
 }
 
-const eliminarVehiculo = async (id_veh) => {
+const eliminarPersona = (id_persona) => {
 
-    try {
-        await axios.delete(base_url + "/" + id_veh)
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    alert("Vehiculo eliminado")
-                }
-            })
-            .catch(e => {
-                throw new Error("Hubo un error al eliminar el vehiculo " + e.message)
-            })
-
-    } catch (e) {
-        throw new Error("Hubo un error al eliminar el vehiculo " + e.message)
-    }
+    let personas = getPersonas().filter(el => el.id != id_persona);
+    localStorage.setItem("personas", JSON.stringify(personas));
 }
 
-const modificarVehiculo = async (vehiculo) => {
+const modificarPersona = (persona) => {
 
-    try {
-        await axios.put(base_url + "/" + vehiculo.id, vehiculo)
-            .then()
-            .catch(e => {
-                throw new Error("Hubo un error al modificar el vehiculo " + e.message)
-            })
-
-    } catch (e) {
-        throw new Error("Hubo un error al modificar el vehiculo " + e.message)
-    }
+    let personas = getPersonas().filter(el => el.id != persona.id);
+    personas.push(persona);
+    localStorage.setItem("personas", JSON.stringify(personas));
 }

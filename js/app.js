@@ -1,55 +1,88 @@
+if (localStorage.getItem("personas") == null) {
+
+    localStorage.setItem("personas", `[{"id":1,"dni":17663295,"nombre":"FABIAN MARCELO","apellido":"ABADIE","cursoNumero":1,"cursoLetra":"F"},{"id":2,"dni":38724762,"nombre":"MAIRA DAIANA","apellido":"ABALOS","cursoNumero":3,"cursoLetra":"M"},{"id":3,"dni":25447357,"nombre":"NOELIA LIDIA","apellido":"ABBA","cursoNumero":2,"cursoLetra":"N"},{"id":4,"dni":27577699,"nombre":"MARÍA SOLEDAD","apellido":"ACHOR","cursoNumero":2,"cursoLetra":"M"},{"id":900,"dni":11496581,"nombre":"JOSE MIGUEL","apellido":"ARMALEO","materia":"Fisica","año":1},{"id":899,"dni":35326658,"nombre":"ROSA DEL VALLE","apellido":"LOPEZ","materia":"Lengua","año":3},{"id":898,"dni":39638351,"nombre":"DANIELA BELEN","apellido":"BROGGI D\`ATENA","materia":"Matematica","año":3},{"id":897,"dni":17275566,"nombre":"PABLO ALBERTO","apellido":"ALMEIDA","materia":"Quimica","año":1}]`);
+}
+
+
 let botonEnviar = document.getElementById("btnGuardar");
+let botonModificar = document.getElementById("btnModificar");
+let botonEliminar = document.getElementById("btnEliminar");
 let botonLimpiar = document.getElementById("btnLimpiar");
+let botonMostrarFormulario = document.getElementById("btnMostrarFormulario");
+let botonCancelar = document.getElementById("btnCancelar");
+
+
 let selectFiltro = document.getElementById("selectFiltro");
 
-botonEnviar.addEventListener("click", enviarAnuncio, false);
-botonEnviar.addEventListener("click", eliminarAnuncio, false);
+botonCancelar.addEventListener("click", switchMostrarFormulario, false);
+botonEnviar.addEventListener("click", enviarPersona, false);
+botonModificar.addEventListener("click", enviarModificarPersona, false);
+botonEliminar.addEventListener("click", enviarEliminarPersona, false);
+
+botonMostrarFormulario.addEventListener("click", switchMostrarFormulario, false);
 
 botonLimpiar.addEventListener("click", limpiarForm, false);
 
 selectFiltro.addEventListener("change", filtrarTabla);
 
-setTimeout(() => { administrarTabla() }, (Math.random() * (3000 - 1000) + 1000));
+let selectTipo = document.getElementById("modalidad");
+selectTipo.addEventListener("change", cambioTipoPersona);
 
-async function administrarTabla() {
+setTimeout(() => { administrarTabla() }, (Math.random() * (2000 - 500) + 500));
 
-    var vehiculos;
-    await getVehiculos().then((data) => {
-        vehiculos = data;
-        localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-    }).catch(e => {
-        alert(e.message)
-        armarDivError()
-        throw new Error(e.message);
-    }).finally(() => {
-        switchSpinner();
-    })
+function cambioTipoPersona(e) {
 
-    if (!vehiculos || vehiculos.length < 1) {
+    if (e.target.value == "docente") {
+        document.querySelector("label[for=cursoLetra]").innerHTML = "Materia";
+        document.querySelector("label[for=cursoNumero]").innerHTML = "Año";
+
+        document.getElementById("cursoLetra").setAttribute("placeholder", "Materia")
+        document.getElementById("cursoNumero").setAttribute("placeholder", "Año")
+    } else {
+
+        document.querySelector("label[for=cursoLetra]").innerHTML = "Curso Letra";
+        document.querySelector("label[for=cursoNumero]").innerHTML = "Curso Numero";
+
+        document.getElementById("cursoLetra").setAttribute("placeholder", "Curso Letra")
+        document.getElementById("cursoNumero").setAttribute("placeholder", "Curso N°")
+    }
+}
+
+function administrarTabla() {
+
+    let personas = getPersonas();
+
+    if (!personas || personas.length < 1) {
         armarDivError()
     } else {
-        var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
-        if(colsOcultas != null && colsOcultas.length > 0){
-            vehiculos.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
+        let mensajeTabla = document.getElementById("pErrorNoPersonas");
+        if (mensajeTabla) {
+            mensajeTabla.remove();
         }
-        
-        let tabla = armarTabla(vehiculos, "vehiculo", colsOcultas);//
-        armarSeccionTabla(tabla, vehiculos)
-        mostrarPromedioPrecios(vehiculos)
+        var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
+        if (colsOcultas != null && colsOcultas.length > 0) {
+            personas.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
+        }
+
+        let tabla = armarTabla(personas, "persona", colsOcultas);//
+        armarSeccionTabla(tabla, personas)
+        mostrarPromedioIDs(personas);
     }
 }
 
 function armarDivError() {
     let pTablaVacia = document.createElement("p");
-    pTablaVacia.innerHTML = "No se encontraron Vehiculos";
+    pTablaVacia.innerHTML = "No se encontraron Personas";
     pTablaVacia.className = "mensajeTabla";
+    pTablaVacia.id = "pErrorNoPersonas";
     document.getElementById("seccionTabla").insertBefore(pTablaVacia, document.getElementById("spinner"));
 }
 
 function armarSeccionTabla(tabla) {
 
     let p = document.createElement("p");
-    p.innerHTML = "* Puede cargar el Formulario con datos de la tabla haciendo click en algun registro.";
+    p.innerHTML = "* Puede cargar el Formulario con datos de la tabla haciendo click en algun registro.<br>" +
+        "* Tambien al hacer click en el titulo del encabezado de las columnas de la tabla puede ordenar";
     p.classList = "noselect"
     p.id = "ayudaTabla";
 
@@ -57,7 +90,8 @@ function armarSeccionTabla(tabla) {
     seccTabla.insertBefore(tabla, document.getElementById("spinner"));
     seccTabla.insertBefore(p, document.getElementById("spinner"));
 
-    document.querySelectorAll("tr").forEach((el) => { el.addEventListener("click", mostrarEnFormulario, false) });
+    document.querySelectorAll("tr").forEach((el) => { el.addEventListener("dblclick", mostrarEnFormulario, false) });
+    document.querySelectorAll("#thOrdenar").forEach((el) => { el.addEventListener("click", ordenarTabla, false) });
 
     let thFiltros = document.getElementsByClassName("thFiltro")
     Array.from(thFiltros).forEach((el) => {
@@ -65,21 +99,11 @@ function armarSeccionTabla(tabla) {
     });
 }
 
-function switchSpinner() {
-
-    let spinner = document.getElementById("spinner");
-    if (spinner.hidden == false) {
-        spinner.hidden = true;
-    } else {
-        spinner.hidden = false;
-    }
-}
-
 function armarTabla(objs, nombreObjs, colFiltradas) {
 
     let dice = "odd";
     let tabla = document.createElement("table");
-    tabla.id = "tabla_vehiculo";
+    tabla.id = "tabla_persona";
     tabla.className = "table table-dark"
     let tbody = document.createElement("tbody");
     let thead = document.createElement("thead");
@@ -87,7 +111,35 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
     let primeraVezIterando = true;
 
     objs.forEach((obj) => {
-        delete obj.fechaAnuncio;
+
+        if (!obj.hasOwnProperty("materia")) {
+
+            obj = {
+                id: obj.id,
+                dni: obj.dni,
+                nombre : obj.nombre,
+                apellido : obj.apellido,
+                cursoNumero : obj.cursoNumero,
+                cursoLetra : obj.cursoLetra,
+                año : "",
+                materia : "",
+            }
+        } else if (obj.hasOwnProperty("materia")) {
+
+            obj = {
+                id: obj.id,
+                dni: obj.dni,
+                nombre : obj.nombre,
+                apellido : obj.apellido,
+                cursoNumero : "",
+                cursoLetra : "",
+                año : obj.año,
+                materia : obj.materia,
+            }
+
+        }
+
+        delete obj.fechaPersona;
 
         let trProducto = document.createElement("tr");
         if (dice == "odd") {
@@ -101,9 +153,6 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
         let trEncabezadoTabla = document.createElement("tr");
         Object.keys(obj).forEach((key) => {
 
-            if (key.includes("id")) {
-                return;
-            }
             if (primeraVezIterando == true) {
 
                 let thProducto = document.createElement("th");
@@ -111,7 +160,7 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
 
                 let nombreCol = key.replace(key[0], key[0].toUpperCase());
                 let checkInput = "<input type='checkbox' checked id=th-" + key + " class='thFiltro'></input>";
-                
+
                 //console.log(colFiltradas);
                 if (colFiltradas) {
                     colFiltradas.forEach(el => {
@@ -121,7 +170,13 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
                     })
                 }
 
-                thProducto.innerHTML = nombreCol + checkInput;
+                let thOrdenar = document.createElement("a");
+                thOrdenar.id = "thOrdenar";
+                thOrdenar.innerHTML = nombreCol
+
+                thProducto.appendChild(thOrdenar);
+
+                thProducto.innerHTML += checkInput;
 
                 trEncabezadoTabla.appendChild(thProducto)
             }
@@ -151,19 +206,19 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
 function refrescarTabla() {
 
     document.getElementById("propEliminar").value = "";
-    let tabla = document.getElementById("tabla_vehiculo");
+    let tabla = document.getElementById("tabla_persona");
 
     if (tabla) {
         tabla.remove();
         document.getElementById("ayudaTabla").remove();
     }
-    switchSpinner();
-    setTimeout(() => { administrarTabla() }, (Math.random() * (3000 - 1000) + 1000));
+    setTimeout(() => { administrarTabla() }, (Math.random() * (2000 - 500) + 500));
 }
 
 function mostrarEnFormulario(e) {
 
-    let idProdEliminar = e.srcElement.parentElement.dataset.vehiculoid;
+    setVisibilidadForm(true);
+    let idProdEliminar = e.srcElement.parentElement.dataset.personaid;
 
     if (!idProdEliminar) {
         return null;
@@ -171,17 +226,24 @@ function mostrarEnFormulario(e) {
     let inputHidden = document.getElementById("propEliminar");
     inputHidden.setAttribute("value", idProdEliminar);
 
-    var campos = ['titulo', 'modalidad', 'descripcion', 'precio', 'puertas', 'kilometros', 'potencia'];
+    var campos = ['id', 'dni', 'nombre', 'apellido', 'cursoNumero', 'cursoLetra', 'año', 'materia'];
     e.srcElement.parentElement.childNodes.forEach((el, i) => {
-
-        if (campos[i] == 'modalidad') {
-            if (el.innerHTML == 'venta') {
-                document.getElementById("venta").checked = true;
-                document.getElementById("alquiler").checked = false;
+        if(campos[i] == 'id'){
+            return;
+        }
+        if (campos[i] == 'año') {
+            let modalidad = document.getElementById("modalidad");
+            if (el.innerHTML == '') {
+                modalidad.value = "alumno";
             } else {
-                document.getElementById("alquiler").checked = true;
-                document.getElementById("venta").checked = false;
+                modalidad.value = "docente";
+                document.getElementById("cursoNumero").value = el.innerHTML
             }
+            modalidad.dispatchEvent(new Event('change'))
+        } else if(campos[i] == 'materia' && el.innerHTML != ""){
+            document.getElementById("cursoLetra").value = el.innerHTML
+        } else if (campos[i] == 'materia' && el.innerHTML == "") {
+
         } else {
             document.getElementById(campos[i]).value = el.innerHTML;
         }
@@ -189,33 +251,105 @@ function mostrarEnFormulario(e) {
     });
 }
 
-async function eliminarAnuncio() {
+function enviarModificarPersona(e) {
 
-    //La validacion no se si ponerla porque en realidad podria eliminar tranquilamente por ID
+    e.preventDefault();
+
     if (document.getElementById("propEliminar").value == '' || !AdministrarValidaciones()) {
         return false;
     }
 
-    let props = localStorage.getItem("vehiculos");
-    let idEliminar = document.getElementById("propEliminar").value;
-    if (props && idEliminar) {
-        let vehiculos = JSON.parse(props).filter(el => el.id_vehiculo != idEliminar);
+    let dni = parseInt(document.getElementById('dni').value);
+    let apellido = document.getElementById('apellido').value;
+    let nombre = document.getElementById('nombre').value;
+    let cursoLetra = document.getElementById('cursoLetra').value;
+    let cursoNumero = parseInt(document.getElementById('cursoNumero').value);
+    let modalidad = document.getElementById('modalidad').value;
+    let idModificar = parseInt(document.getElementById("propEliminar").value);
 
-        await eliminarVehiculo(idEliminar).then(() => {
+    let persona;
+    switch (modalidad) {
 
-            localStorage.removeItem("vehiculos");
-            if (vehiculos.length > 0) {
-                localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-            }
-            document.getElementById("formularioBienesRaices").reset();
-        }).catch(e => {
-            alert(e.message)
-            throw new Error(e.message);
-        }).finally(() => {
-
-            refrescarTabla();
-        })
+        case 'docente': { persona = new Docente(idModificar, dni, apellido, nombre, cursoLetra, cursoNumero) }; break;
+        case 'alumno': { persona = new Alumno(idModificar, dni, apellido, nombre, cursoLetra, cursoNumero) }; break;
     }
+    
+    if (idModificar) {
+        modificarPersona(persona);
+        refrescarTabla();
+        document.getElementById("btnLimpiar").click()
+    }
+
+    document.getElementById("btnMostrarFormulario").click()
+}
+
+function ordenarTabla(e) {
+    e.preventDefault();
+
+    let personas = filtrarPersonas(getPersonas());
+
+    let campoProp = e.target.text.toLowerCase();
+    if (campoProp == "tipoventa") {
+        campoProp = "tipoVenta";
+    } else if (campoProp == "cantpuertas") {
+        campoProp = "cantPuertas";
+    }
+
+    let metodoSort = localStorage.getItem("metodoSort");
+    if (metodoSort == "menor") {
+        metodoSort = "mayor";
+    } else if (metodoSort == "mayor" || metodoSort == null) {
+        metodoSort = "menor"
+    }
+
+    personas.sort(function (per1, per2) {
+
+        let resultado;
+        if (metodoSort == "mayor") {
+            resultado = 1;
+        } else {
+            resultado = -1;
+        }
+        if (per1[campoProp] < per2[campoProp]) {
+            return resultado * -1
+        }
+
+        if (per1[campoProp] > per2[campoProp]) {
+            return resultado
+        }
+        return 0;
+    });
+
+    localStorage.setItem("metodoSort", metodoSort);
+
+    document.getElementById("ayudaTabla").remove();
+    document.getElementById("tabla_persona").remove();
+
+    var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
+    if (colsOcultas != null && colsOcultas.length > 0) {
+        personas.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
+    }
+    let tabla = armarTabla(personas, "persona", colsOcultas);
+    armarSeccionTabla(tabla, personas)
+
+}
+
+function enviarEliminarPersona(e) {
+
+    e.preventDefault();
+
+    if (document.getElementById("propEliminar").value == '' || !AdministrarValidaciones()) {
+        return false;
+    }
+
+    let idEliminar = document.getElementById("propEliminar").value;
+    if (idEliminar) {
+        eliminarPersona(idEliminar);
+        refrescarTabla();
+        document.getElementById("btnLimpiar").click()
+    }
+
+    document.getElementById("btnMostrarFormulario").click()
 }
 
 function limpiarForm(e) {
@@ -229,62 +363,65 @@ function limpiarForm(e) {
     }
 }
 
-function filtrarVehiculos(veh) {
+function filtrarPersonas(per) {
 
     let selectedOpt = document.getElementById("selectFiltro").value;
-    if (selectedOpt != "todos") {
-        veh = veh.filter(el => el.tipoVenta == selectedOpt)
+    if (selectedOpt != "todos" && per.length > 0) {
+        per = per.filter(el => {
+            if (el.hasOwnProperty("cursoLetra") && selectedOpt == "alumno") {
+                return el;
+            }else if(el.hasOwnProperty("año") && selectedOpt == "docente"){
+                return el;
+            }
+        })
     }
-    return veh
+    return per
 }
 
 function filtrarTabla(e) {
 
-    let veh = localStorage.getItem("vehiculos");
-   
-    let columnasOcultas = getColumnasOcultas();
-    
-    let tablaExistente = document.getElementById("tabla_vehiculo");
-    if (veh && tablaExistente != null) {
-        veh = JSON.parse(veh);
-        document.getElementById("tabla_vehiculo").remove();
-        document.getElementById("ayudaTabla").remove();
-        veh = filtrarVehiculos(veh);
+    let per = localStorage.getItem("personas");
 
-        veh.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
+    let columnasOcultas = getColumnasOcultas();
+
+    let tablaExistente = document.getElementById("tabla_persona");
+    if (per && tablaExistente != null) {
+        per = JSON.parse(per);
+        document.getElementById("tabla_persona").remove();
+        document.getElementById("ayudaTabla").remove();
+        per = filtrarPersonas(per);
+
+        per.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
         //Si borro con delete no aparecen los checks'
 
-        let tabla = armarTabla(veh, "vehiculo", columnasOcultas);
+        let tabla = armarTabla(per, "persona", columnasOcultas);
         armarSeccionTabla(tabla)
-        mostrarPromedioPrecios(veh)
-        mostrarMaximoPrecio(veh);
-        mostrarMinimoPrecio(veh);
-        mostrarPromedioPotencia(veh);
+        mostrarPromedioIDs(per);
     }
 
 }
 
 function filtrarColumna(e) {
 
-    let veh = localStorage.getItem("vehiculos");
-    
+    let per = localStorage.getItem("personas");
+
     let columnasOcultas = getColumnasOcultas();
     localStorage.setItem("columnasOcultas", JSON.stringify(columnasOcultas));
 
-    let tablaExistente = document.getElementById("tabla_vehiculo");
-    if (veh && tablaExistente != null) {
+    let tablaExistente = document.getElementById("tabla_persona");
+    if (per && tablaExistente != null) {
 
-        veh = JSON.parse(veh);
-        veh = filtrarVehiculos(veh);
+        per = JSON.parse(per);
+        per = filtrarPersonas(per);
 
-        veh.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
+        per.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
         //Si borro con delete no aparecen los checks'
 
-        document.getElementById("tabla_vehiculo").remove();
+        document.getElementById("tabla_persona").remove();
         document.getElementById("ayudaTabla").remove();
 
-        
-        let tabla = armarTabla(veh, "vehiculo", columnasOcultas);
+
+        let tabla = armarTabla(per, "persona", columnasOcultas);
         armarSeccionTabla(tabla)
     }
 }
@@ -303,47 +440,40 @@ function getColumnasOcultas() {
     return columnasOcultas;
 }
 
-function mostrarPromedioPrecios(vehiculos) {
+function mostrarPromedioIDs(personas) {
 
-    let promedioPrecios = 0;
-    if (selectFiltro.value != "todos") {
-        promedioPrecios = Anuncio.getPromedioPrecio(vehiculos);
-        promedioPrecios = promedioPrecios.toFixed(2);
+    let totalIDs = 0;
+    totalIDs = personas.reduce(function( valorAnterior, valorActual, indice, vector){
+        return valorActual.id + valorAnterior
+      }, totalIDs);
+
+    //console.log(totalIDs)
+    if (personas.length > 0) {
+        promedioIDs = totalIDs / (document.querySelectorAll("tr").length - 1);
     } else {
-        promedioPrecios = "N/A";
+        promedioIDs = "N/A";
     }
     let promeDIOS = document.getElementById("promedios");
-    promeDIOS.innerText = "PROMEDIO DE PRECIOS: " + promedioPrecios;
+    promeDIOS.innerText = "PromeDIOS de ID: " + promedioIDs.toFixed(2);
 }
 
-function mostrarMaximoPrecio(vehiculos) {
 
-    let cocheMaximoPrecio = vehiculos.reduce(function(anterior, actual) {
-        return (anterior.precio > actual.precio) ? anterior : actual
-    })
-    
-    let mayorPrecioDiv = document.getElementById("mayorPrecio");
-    mayorPrecioDiv.innerText = "MAYOR PRECIO: " + cocheMaximoPrecio.precio;
-      
+function switchMostrarFormulario(e) {
+
+    e.preventDefault();
+
+    botonLimpiar.click();
+    let articleFormulario = document.getElementById("seccionFormulario")
+    let estadoVisibilidad = articleFormulario.style.display
+    if (estadoVisibilidad == "none") {
+        articleFormulario.style.display = "block";
+    } else {
+        articleFormulario.style.display = "none";
+    }
 }
 
-function mostrarMinimoPrecio(vehiculos) {
+function setVisibilidadForm(visibilidad) {
 
-    const cocheMenorPrecio = vehiculos.reduce(function(anterior, actual) {
-        return (anterior.precio < actual.precio) ? anterior : actual
-    })
-    
-    let menorPrecioDiv = document.getElementById("menorPrecio");
-    menorPrecioDiv.innerText = "MENOR PRECIO: " + cocheMenorPrecio.precio;
-      
-}
-
-function mostrarPromedioPotencia(vehiculos){
-
-    let totalPotencia = vehiculos[0].potencia;
-    let sumaTotalPotencia = vehiculos.reduce((anterior, cocheActual) => totalPotencia += cocheActual.potencia);
-    let promedioPotencia = sumaTotalPotencia / vehiculos.length;
-
-    let promedioPotenciaDiv = document.getElementById("promedioPotencia");
-    promedioPotenciaDiv.innerText = "PROMEDIO POTENCIA: " + promedioPotencia.toFixed(2);
+    let articleFormulario = document.getElementById("seccionFormulario")
+    visibilidad == true ? articleFormulario.style.display = "block" : articleFormulario.style.display = "none";
 }

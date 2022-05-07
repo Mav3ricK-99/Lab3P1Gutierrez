@@ -1,4 +1,4 @@
-async function enviarAnuncio(e) {
+function enviarPersona(e) {
 
     e.preventDefault();
     
@@ -6,49 +6,39 @@ async function enviarAnuncio(e) {
         return false;
     }
     
-    let titulo = document.getElementById('titulo').value;
-    let transaccion = GetValueChecked('input[type=radio]');
-    let descripcion = document.getElementById('descripcion').value;
-    let precio = parseFloat(document.getElementById('precio').value);
-    let puertas = parseInt(document.getElementById('puertas').value);
-    let kilometros = parseFloat(document.getElementById('kilometros').value);
-    let potencia = parseInt(document.getElementById('potencia').value);
+    let dni = parseInt(document.getElementById('dni').value);
+    let apellido = document.getElementById('apellido').value;
+    let nombre = document.getElementById('nombre').value;
+    let cursol = document.getElementById('cursoLetra').value;
+    let curson = parseInt(document.getElementById('cursoNumero').value);
+    let modalidad = document.getElementById('modalidad').value;
 
-    let vehiculo = new Anuncio_Auto(titulo, transaccion, descripcion, precio, puertas, kilometros, potencia);
+    let persona;
+    switch(modalidad){
 
-    await agregarVehiculo(vehiculo).then(() => {
-        agregarAutoLocalStorage(vehiculo);
-    }).catch(e => {
-        alert(e.message)
-        throw new Error(e.message);
-    })
+        case 'docente': {persona = new Docente(0, dni, apellido, nombre, cursol, curson)};break;
+        case 'alumno': {persona = new Alumno(0, dni, apellido, nombre, cursol, curson)};break;
+    }
+    persona.toString();
+    console.log(persona);
 
-    document.getElementById("formularioBienesRaices").reset();
+    agregarPersona(persona);
+
+    document.getElementById("btnLimpiar").click();
     
     let primerElSeccTabla = document.getElementById("seccionTabla").children[0];
     if(primerElSeccTabla.tagName == "P"){
         primerElSeccTabla.remove();
     }
     refrescarTabla();
+    document.getElementById("btnMostrarFormulario").click()
 
     return true;
 }
 
-function agregarAutoLocalStorage(vehiculo){
-    
-    if(!localStorage.getItem("vehiculos")){
-        localStorage.setItem("vehiculos", "["+JSON.stringify(vehiculo)+"]");
-    }else{
-        let vehiculos = JSON.parse(localStorage.getItem("vehiculos"));
-        vehiculos.push(vehiculo);
-        
-        localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
-    }
-}
-
 function AdministrarValidaciones() {
-    var campos = ['titulo', 'descripcion', 'precio', 'puertas', 'kilometros', 'potencia'];
-    var camposNumericos = ['precio', 'puertas', 'kilometros', 'potencia'];
+    var campos = ['dni', 'apellido', 'nombre', 'cursoLetra', 'cursoNumero'];
+    var camposNumericos = ['dni'];
     var flagVacios = false, flagValorInvalido = false, flagNoTransaccion = false;
     var camposVacios = [];
     var camposValorInvalido = [];
@@ -67,10 +57,6 @@ function AdministrarValidaciones() {
             camposValorInvalido.push(el);
         }
     })
-
-    if(GetValueChecked('input[type=radio]') == -1){
-        flagNoTransaccion = true;
-    }
 
     if (!flagVacios && !flagValorInvalido && !flagNoTransaccion) {
         
@@ -113,7 +99,7 @@ function AdministrarErrores(camposVacios, camposValorInvalido, flagNoTransaccion
     }
 
     if(flagNoTransaccion == true){
-        divErrores.innerHTML += "Debe seleccionar al menos un tipo de Transaccion (Venta/Alquiler)";
+        divErrores.innerHTML += "Debe seleccionar al menos un tipo de Persona (Docente/Alumno)";
     }
     
 }
@@ -133,7 +119,7 @@ function GenerarListaCampos(lista){
 function ValidarCamposNumericos(idCampo){
 
     let element = document.getElementById(idCampo);
-    if(isNaN(element.value)){
+    if(isNaN(element.value) || element.value.length < 8){
         return false;
     }
     return true;
@@ -145,11 +131,4 @@ function ValidarCamposVacios(idCampo) {
         return true;
     }
     return false;
-}
-
-function GetValueChecked(camposRadio){
-    let id = -1;
-    document.querySelectorAll(camposRadio).forEach((el) => {if(el.checked){id = el.id;}})
-    
-    return id;
 }

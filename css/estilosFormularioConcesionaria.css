@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 13vh;
+    height: 18vh;
 }
 
 #footerSection{
@@ -132,7 +132,7 @@ input[type="text"], input[type="number"]{
     font-family: "Roboto-Medium", Arial;
 }
 
-input[type="text"], #precio{
+#apellido, #nombre, #dni, #precio{
     margin-bottom: 2em;
 }
 
@@ -147,6 +147,13 @@ label{
     margin-top: 10px;
     display: flex;
     background-color: rgb(16, 173, 121);
+}
+
+
+#btnModificar{
+    margin-top: 10px;
+    display: flex;
+    background-color: rgb(244, 151, 11);
 }
 
 #btnLimpiar{
@@ -226,19 +233,42 @@ label{
   }
   #divBotones{
 
-    width: 15.8vw;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
     display: flex;
     justify-content: space-around;
   }
 
-  #btnEliminar{
-    
-    background-color: rgb(255, 159, 34);
+  #tabla_persona{
+      margin-top: 1vh;
+  }
+
+#btnMostrarFormulario{
+ 
+    display: flex;
+    align-self: center;
+    padding: 0.5rem;
+    color:white;
+    border-radius: .2rem;
+    background-color: rgb(24, 214, 110);
+    cursor: pointer;
+}
+
+#btnEliminar{
+    margin-top: 10px;
+    display: flex;
+    background-color: rgb(255, 41, 34);
 }
 
 #btnCancelar{
     
     background-color: rgb(71, 51, 245);
+}
+
+.promeDIOS{
+    display: flex;
+    flex-direction: column;
 }
 
 #ayudaTabla{
@@ -250,6 +280,11 @@ label{
 #filtros{
     width: 100%;
 }
+
+#btnCancelar {
+    background: rgb(205, 199, 199);
+}
+
 #filtros h3{
     text-align: center;
     font-size: 20px;
@@ -260,13 +295,16 @@ label{
 }
 #filtrosSelect{
 
+    width: 100%;
     display: flex;
     justify-content: space-around;
     font-family: "Roboto-Bold", Arial;
 }
 
 #selectFiltro{
-    width: 5vw;
+    height: 7vh;
+    width: 7vw;
+    align-self: center;
 }
 
 
@@ -277,11 +315,11 @@ label{
         width: 55vw;
     }
 
-    #tabla_vehiculo{
+    #tabla_persona{
         width: 20vw;
     }
 
-    #tabla_vehiculo th, #tabla_vehiculo td{
+    #tabla_persona th, #tabla_persona td{
         font-size:17px;
     }
 }
@@ -298,7 +336,7 @@ label{
     }
 
 
-    #tabla_vehiculo th, #tabla_vehiculo td{
+    #tabla_persona th, #tabla_persona td{
         padding:0;
         left:0;
         font-size:14px;

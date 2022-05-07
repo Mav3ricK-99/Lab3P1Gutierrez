@@ -3,18 +3,20 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Listado de coches</title>
+        <title>Formulario Alta Docentes/Alumnos</title>
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./css/estilosIndex.css">
-        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap-utilities.min.css">
+        <link rel="stylesheet" href="./css/estilosFormularioConcesionaria.css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        
     </head>
     <body>
         <header>
-            <div id="headerNavegacionLogo" class="container full-width-image">
+            <nav id="navSection">
                 <div id="logo">
-                   <img width="300px" src="./Imagenes/pisteros.png">
+                    <img src="Imagenes/logo.png">
                 </div>
-                <nav id="navSection">
+                <nav>
                     <ul>
                         <li><a href="#">Nosotros</a></li>
                         <li><a href="#">Anuncios</a></li>
@@ -22,33 +24,99 @@
                         <li><a href="#">Contacto</a></li>
                     </ul>
                 </nav>
-            </div>
-
-            <div id="titulosNav">
-                <h1>Venta y alquiler de Vehiculos</h1>
-                <h1>Exclusivos de Lujo</h1>
-            </div>
-            </header>
+            </nav>
+        </header>
 
         <main id="app">
-
-            <section id="anuncios">
-                <h2 id="tituloAnuncios">Autos en Venta y Alquiler</h2>
+            <section>
+                <article>
+                    <h2 id="tituloAdministracion">Administracion</h2>
+                    <div id="fotoBanner"><img src="./Imagenes/banner.png"></div>
+                </article>
             </section>
 
-            <section id="graficos">
-                <canvas id="graficoVisitas" width="700" height="500"></canvas>
+            <section id="seccionFormulario" style="display:none">
+                
+                <form action="#" method="POST" id="formularioBienesRaices">
+
+                    <input type="hidden" name="propEliminar" id="propEliminar">
+                    <label for="titulo">DNI</label>
+                    <input type="number" name="dni" id="dni" placeholder="DNI" autocomplete="off">
+
+                    <label for="modalidad">Tipo</label>
+
+                    <select id="modalidad">
+                       <option value="docente" id="docente">Docente</option>
+                        <option value="alumno" id="alumno" selected>Alumno</option>
+                    </select>
+                    
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off">
+
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" autocomplete="off">
+
+
+                    <div id="inputHorizontales">
+                        <label for="cursoLetra">Curso Letra</label>
+                        <input type="text" name="cursoLetra" id="cursoLetra" placeholder="Curso Letra">
+
+                        <label for="cursoNumero">Curso Numero</label>
+                        <input type="number" name="cursoNumero" id="cursoNumero" placeholder="Curso N°">
+                   </div>
+                    <div id="divBotones">
+                        <button id="btnGuardar"><img src="Imagenes/svg/diskette-svgrepo-com.svg" width="20px"> Guardar</button>
+                        <button id="btnModificar">Modificar</button>
+                        <button id="btnEliminar">Eliminar</button>
+                        <button id="btnLimpiar">Limpiar</button>
+                        <button id="btnCancelar">Cancelar</button>
+                    </div>
+                    <hr>
+                </form>
+
             </section>
 
-            <section id="seccionUltimosAnuncios">
-                <button id="ultimosTresButton">Mostrar ultimos 3 anuncios</button>
+            <section id="seccionTabla">
+                <article id="filtros">
+                    <h3>Filtros</h3>
+                    <div id="filtrosSelect">
+
+                        <select id="selectFiltro" class="form-select">
+                            <option class="dropdown-item" value="todos" selected>Todos</option>
+                            <option class="dropdown-item" value="docente">Docentes</option>
+                            <option class="dropdown-item" value="alumno">Alumnos</option>
+                        </select>
+                        <div id="btnMostrarFormulario">AGREGAR</div>
+                        <div class="promeDIOS">
+                            <div id="promedios">
+                                PromeDIOS de ID:
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </section>
+
+            <footer id="footerSection">
+                <nav>
+                    <ul>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Anuncios</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <p>Todos los derechos reservados &#169</p>
+            </footer>
         </main>
         
-        <script src="./node_modules/chart.js/dist/chart.min.js"></script>
-        <script src="./node_modules/chart.js/dist/chart.js"></script>
-        <script src="./node_modules/axios/dist/axios.min.js"></script>
+        <!--<script src="./node_modules/axios/dist/axios.min.js"></script>!-->
         <script src="./js/peticiones.js"></script>
-        <script src="./js/mostrarAnuncios.js" async defer></script>
+        <script src="./js/Persona.js" defer></script>
+        <script src="./js/Docente.js" defer></script>
+        <script src="./js/Alumno.js" defer></script>
+        <script src="./js/validaciones.js" defer></script>
+        <script src="./js/app.js" defer></script>
     </body>
 </html>
