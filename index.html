@@ -1,122 +1,129 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Formulario Alta Docentes/Alumnos</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./css/estilosFormularioConcesionaria.css">
-        <link rel="stylesheet" href="./css/bootstrap.min.css">
-        
-    </head>
-    <body>
-        <header>
-            <nav id="navSection">
-                <div id="logo">
-                    <img src="Imagenes/logo.png">
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#">Nosotros</a></li>
-                        <li><a href="#">Anuncios</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contacto</a></li>
-                    </ul>
-                </nav>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Formulario Alta Docentes/Alumnos</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/estilosFormularioConcesionaria.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <header>
+        <nav id="navSection">
+            <div id="logo">
+                <img src="Imagenes/logo.png">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#">Anuncios</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
             </nav>
-        </header>
+        </nav>
+    </header>
 
-        <main id="app">
-            <section>
-                <article>
-                    <h2 id="tituloAdministracion">Administracion</h2>
-                    <div id="fotoBanner"><img src="./Imagenes/banner.png"></div>
-                </article>
-            </section>
+    <main id="app">
+        <section>
+            <article>
+                <h2 id="tituloAdministracion">Administracion</h2>
+                <div id="fotoBanner"><img src="./Imagenes/banner.png"></div>
+            </article>
+        </section>
 
-            <section id="seccionFormulario" style="display:none">
-                
-                <form action="#" method="POST" id="formularioBienesRaices">
+        <section id="seccionFormulario" style="display:none">
+            <h2 id="tituloForm">Alta</h2>
+            <form action="#" method="POST" id="formularioBienesRaices">
 
-                    <input type="hidden" name="propEliminar" id="propEliminar">
-                    <label for="titulo">DNI</label>
-                    <input type="number" name="dni" id="dni" placeholder="DNI" autocomplete="off">
+                <label for="id">ID</label>
+                <input type="text" name="id" id="id" placeholder="ID" autocomplete="off" disabled>
 
-                    <label for="modalidad">Tipo</label>
+                <label for="fabricante">Fabricante</label>
+                <input type="text" name="fabricante" id="fabricante" placeholder="fabricante" autocomplete="off">
 
-                    <select id="modalidad">
-                       <option value="docente" id="docente">Docente</option>
-                        <option value="alumno" id="alumno" selected>Alumno</option>
+                <label for="modalidad">Tipo</label>
+
+                <select id="modalidad">
+                    <option value="auto" id="auto">Auto</option>
+                    <option value="camioneta" id="camioneta" selected>Camioneta</option>
+                </select>
+
+                <label for="modelo">modelo</label>
+                <input type="text" name="modelo" id="modelo" placeholder="modelo" autocomplete="off">
+
+                <label for="añoLanzamiento">añoLanzamiento</label>
+                <input type="number" name="añoLanzamiento" id="añoLanzamiento" placeholder="añoLanzamiento" autocomplete="off">
+
+
+                <div id="inputHorizontales">
+                    <label for="transmision4x4" id="labelTrans" >Transmision 4x4</label>
+                    <input type="text" name="transmision4x4" id="transmision4x4" placeholder="Transmision 4x4 SI/NO">
+
+                    <label hidden id="labelPuertas" for="cantidadPuertas">Cantidad de puertas</label>
+                    <input type="number" hidden name="cantidadPuertas" id="cantidadPuertas" placeholder="Cantidad de Puertas">
+                </div>
+                <div id="divBotones">
+                    <button id="btnGuardar"><img src="Imagenes/svg/diskette-svgrepo-com.svg" width="20px">
+                        Aceptar</button>
+                    <button hidden id="btnModificar">Modificar</button>
+                    <button hidden id="btnEliminar">Eliminar</button>
+                    <!--<button id="btnLimpiar">Limpiar</button> !-->
+                    <button id="btnCancelar">Cancelar</button>
+                </div>
+                <hr>
+            </form>
+
+        </section>
+
+        <section id="seccionTabla">
+            <article id="filtros">
+                <h3>Filtros</h3>
+                <div id="filtrosSelect">
+
+                    <select id="selectFiltro" class="form-select">
+                        <option class="dropdown-item" value="todos" selected>Todos</option>
+                        <option class="dropdown-item" value="auto">Autos</option>
+                        <option class="dropdown-item" value="camioneta">Camionetas</option>
                     </select>
-                    
-                    <label for="apellido">Apellido</label>
-                    <input type="text" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off">
 
-                    <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" autocomplete="off">
+                    <!--
+                    <div class="promeDIOS">
+                        <div id="promedios">
+                            PromeDIOS de ID:
+                        </div> 
+                    </div> Funciona pero no hace falta !-->
+                </div>
+            </article>
+            <div id="spinner" hidden><img  src="./Imagenes/spiner.gif" /></div>
+            <div id="btnMostrarFormulario">AGREGAR ELEMENTO</div>
+        </section>
 
+        <footer id="footerSection">
+            <nav>
+                <ul>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#">Anuncios</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
 
-                    <div id="inputHorizontales">
-                        <label for="cursoLetra">Curso Letra</label>
-                        <input type="text" name="cursoLetra" id="cursoLetra" placeholder="Curso Letra">
+            <p id="speeeeneeng">Todos los derechos reservados &#169</p>
+        </footer>
+    </main>
 
-                        <label for="cursoNumero">Curso Numero</label>
-                        <input type="number" name="cursoNumero" id="cursoNumero" placeholder="Curso N°">
-                   </div>
-                    <div id="divBotones">
-                        <button id="btnGuardar"><img src="Imagenes/svg/diskette-svgrepo-com.svg" width="20px"> Guardar</button>
-                        <button id="btnModificar">Modificar</button>
-                        <button id="btnEliminar">Eliminar</button>
-                        <button id="btnLimpiar">Limpiar</button>
-                        <button id="btnCancelar">Cancelar</button>
-                    </div>
-                    <hr>
-                </form>
+    <script src="./js/peticiones.js"></script>
+    <script src="./js/Vehiculo.js" defer></script>
+    <script src="./js/Auto.js" defer></script>
+    <script src="./js/Camioneta.js" defer></script>
+    <script src="./js/validaciones.js" defer></script>
+    <script src="./js/app.js" defer></script>
+</body>
 
-            </section>
-
-            <section id="seccionTabla">
-                <article id="filtros">
-                    <h3>Filtros</h3>
-                    <div id="filtrosSelect">
-
-                        <select id="selectFiltro" class="form-select">
-                            <option class="dropdown-item" value="todos" selected>Todos</option>
-                            <option class="dropdown-item" value="docente">Docentes</option>
-                            <option class="dropdown-item" value="alumno">Alumnos</option>
-                        </select>
-                        <div id="btnMostrarFormulario">AGREGAR</div>
-                        <div class="promeDIOS">
-                            <div id="promedios">
-                                PromeDIOS de ID:
-
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </section>
-
-            <footer id="footerSection">
-                <nav>
-                    <ul>
-                        <li><a href="#">Nosotros</a></li>
-                        <li><a href="#">Anuncios</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contacto</a></li>
-                    </ul>
-                </nav>
-
-                <p>Todos los derechos reservados &#169</p>
-            </footer>
-        </main>
-        
-        <!--<script src="./node_modules/axios/dist/axios.min.js"></script>!-->
-        <script src="./js/peticiones.js"></script>
-        <script src="./js/Persona.js" defer></script>
-        <script src="./js/Docente.js" defer></script>
-        <script src="./js/Alumno.js" defer></script>
-        <script src="./js/validaciones.js" defer></script>
-        <script src="./js/app.js" defer></script>
-    </body>
 </html>

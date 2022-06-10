@@ -1,80 +1,94 @@
-if (localStorage.getItem("personas") == null) {
-
-    localStorage.setItem("personas", `[{"id":1,"dni":17663295,"nombre":"FABIAN MARCELO","apellido":"ABADIE","cursoNumero":1,"cursoLetra":"F"},{"id":2,"dni":38724762,"nombre":"MAIRA DAIANA","apellido":"ABALOS","cursoNumero":3,"cursoLetra":"M"},{"id":3,"dni":25447357,"nombre":"NOELIA LIDIA","apellido":"ABBA","cursoNumero":2,"cursoLetra":"N"},{"id":4,"dni":27577699,"nombre":"MARÍA SOLEDAD","apellido":"ACHOR","cursoNumero":2,"cursoLetra":"M"},{"id":900,"dni":11496581,"nombre":"JOSE MIGUEL","apellido":"ARMALEO","materia":"Fisica","año":1},{"id":899,"dni":35326658,"nombre":"ROSA DEL VALLE","apellido":"LOPEZ","materia":"Lengua","año":3},{"id":898,"dni":39638351,"nombre":"DANIELA BELEN","apellido":"BROGGI D\`ATENA","materia":"Matematica","año":3},{"id":897,"dni":17275566,"nombre":"PABLO ALBERTO","apellido":"ALMEIDA","materia":"Quimica","año":1}]`);
-}
-
-
 let botonEnviar = document.getElementById("btnGuardar");
-let botonModificar = document.getElementById("btnModificar");
-let botonEliminar = document.getElementById("btnEliminar");
-let botonLimpiar = document.getElementById("btnLimpiar");
+//let botonLimpiar = document.getElementById("btnLimpiar");
 let botonMostrarFormulario = document.getElementById("btnMostrarFormulario");
 let botonCancelar = document.getElementById("btnCancelar");
-
+let botonModificar = document.getElementById("btnModificar");
+let botonEliminar = document.getElementById("btnEliminar");
 
 let selectFiltro = document.getElementById("selectFiltro");
 
 botonCancelar.addEventListener("click", switchMostrarFormulario, false);
-botonEnviar.addEventListener("click", enviarPersona, false);
-botonModificar.addEventListener("click", enviarModificarPersona, false);
-botonEliminar.addEventListener("click", enviarEliminarPersona, false);
+botonEnviar.addEventListener("click", enviarVehiculo, false);
+btnModificar.addEventListener("click", enviarModificarVehiculo, false);
+btnEliminar.addEventListener("click", enviarEliminarVehiculo, false);
 
 botonMostrarFormulario.addEventListener("click", switchMostrarFormulario, false);
 
-botonLimpiar.addEventListener("click", limpiarForm, false);
+//botonLimpiar.addEventListener("click", limpiarForm, false);
 
 selectFiltro.addEventListener("change", filtrarTabla);
 
 let selectTipo = document.getElementById("modalidad");
-selectTipo.addEventListener("change", cambioTipoPersona);
+selectTipo.addEventListener("change", cambioTipoVehiculo);
 
-setTimeout(() => { administrarTabla() }, (Math.random() * (2000 - 500) + 500));
+administrarTabla();
 
-function cambioTipoPersona(e) {
+function cambioTipoVehiculo(e) {
+    if (e.target.value == "auto") {
 
-    if (e.target.value == "docente") {
-        document.querySelector("label[for=cursoLetra]").innerHTML = "Materia";
-        document.querySelector("label[for=cursoNumero]").innerHTML = "Año";
+        document.getElementById("labelTrans").hidden = true;
+        document.getElementById("labelPuertas").hidden = false;
 
-        document.getElementById("cursoLetra").setAttribute("placeholder", "Materia")
-        document.getElementById("cursoNumero").setAttribute("placeholder", "Año")
+        document.getElementById("cantidadPuertas").hidden = false;
+        document.getElementById("transmision4x4").hidden = true;
     } else {
+        document.getElementById("labelTrans").hidden = false;
+        document.getElementById("labelPuertas").hidden = true;
 
-        document.querySelector("label[for=cursoLetra]").innerHTML = "Curso Letra";
-        document.querySelector("label[for=cursoNumero]").innerHTML = "Curso Numero";
-
-        document.getElementById("cursoLetra").setAttribute("placeholder", "Curso Letra")
-        document.getElementById("cursoNumero").setAttribute("placeholder", "Curso N°")
+        document.getElementById("cantidadPuertas").hidden = true;
+        document.getElementById("transmision4x4").hidden = false;
     }
 }
 
 function administrarTabla() {
 
-    let personas = getPersonas();
+    if (localStorage.getItem("vehiculos") === null) {
+        setSpinnerVisible(true);
+        getVehiculos().then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Hubo un problema al traer los vehiculos');
+        }).then(data => {
+            localStorage.setItem("vehiculos", JSON.stringify(data));
+            setSpinnerVisible(false);
 
-    if (!personas || personas.length < 1) {
-        armarDivError()
+            let vehiculos = data;
+            if (!vehiculos || vehiculos.length < 1) {
+                armarDivError()
+            } else {
+                let mensajeTabla = document.getElementById("pErrorNoVehiculos");
+                if (mensajeTabla) {
+                    mensajeTabla.remove();
+                }
+
+                let tabla = armarTabla(vehiculos, "vehiculo");
+                armarSeccionTabla(tabla, vehiculos)
+                //mostrarPromedioIDs(vehiculos);
+            }
+
+        }).catch((e) => {
+            if (!e.message.includes("Failed to fetch")) {
+                alert(e.message);
+            } else {
+                alert('No se pudo establecer una conexion con el servidor');
+            }
+            armarDivError();
+            setSpinnerVisible(false);
+        });
     } else {
-        let mensajeTabla = document.getElementById("pErrorNoPersonas");
-        if (mensajeTabla) {
-            mensajeTabla.remove();
-        }
-        var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
-        if (colsOcultas != null && colsOcultas.length > 0) {
-            personas.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
-        }
-
-        let tabla = armarTabla(personas, "persona", colsOcultas);//
-        armarSeccionTabla(tabla, personas)
-        mostrarPromedioIDs(personas);
+        let vehiculos = JSON.parse(localStorage.getItem("vehiculos"))
+        let tabla = armarTabla(vehiculos, "vehiculo");
+        armarSeccionTabla(tabla, vehiculos)
     }
+
 }
 
 function armarDivError() {
     let pTablaVacia = document.createElement("p");
-    pTablaVacia.innerHTML = "No se encontraron Personas";
+    pTablaVacia.innerHTML = "No se encontraron Vehiculos";
     pTablaVacia.className = "mensajeTabla";
-    pTablaVacia.id = "pErrorNoPersonas";
+    pTablaVacia.id = "pErrorNoVehiculos";
     document.getElementById("seccionTabla").insertBefore(pTablaVacia, document.getElementById("spinner"));
 }
 
@@ -88,22 +102,18 @@ function armarSeccionTabla(tabla) {
 
     let seccTabla = document.getElementById("seccionTabla");
     seccTabla.insertBefore(tabla, document.getElementById("spinner"));
-    seccTabla.insertBefore(p, document.getElementById("spinner"));
+    seccTabla.appendChild(p, document.getElementById("btnMostrarFormulario"));
 
     document.querySelectorAll("tr").forEach((el) => { el.addEventListener("dblclick", mostrarEnFormulario, false) });
     document.querySelectorAll("#thOrdenar").forEach((el) => { el.addEventListener("click", ordenarTabla, false) });
 
-    let thFiltros = document.getElementsByClassName("thFiltro")
-    Array.from(thFiltros).forEach((el) => {
-        el.addEventListener("change", filtrarColumna)
-    });
 }
 
-function armarTabla(objs, nombreObjs, colFiltradas) {
+function armarTabla(objs, nombreObjs) {
 
     let dice = "odd";
     let tabla = document.createElement("table");
-    tabla.id = "tabla_persona";
+    tabla.id = "tabla_vehiculo";
     tabla.className = "table table-dark"
     let tbody = document.createElement("tbody");
     let thead = document.createElement("thead");
@@ -112,34 +122,27 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
 
     objs.forEach((obj) => {
 
-        if (!obj.hasOwnProperty("materia")) {
+        if (!obj.hasOwnProperty("cantidadPuertas")) {
 
             obj = {
                 id: obj.id,
-                dni: obj.dni,
-                nombre : obj.nombre,
-                apellido : obj.apellido,
-                cursoNumero : obj.cursoNumero,
-                cursoLetra : obj.cursoLetra,
-                año : "",
-                materia : "",
-            }
-        } else if (obj.hasOwnProperty("materia")) {
+                fabricante: obj.fabricante,
+                añoLanzamiento: obj.añoLanzamiento,
+                modelo: obj.modelo,
+                cantidadPuertas: "N/A",
+                transmision4x4: obj.transmision4x4,
 
+            }
+        } else if (obj.hasOwnProperty("cantidadPuertas")) {
             obj = {
                 id: obj.id,
-                dni: obj.dni,
-                nombre : obj.nombre,
-                apellido : obj.apellido,
-                cursoNumero : "",
-                cursoLetra : "",
-                año : obj.año,
-                materia : obj.materia,
+                fabricante: obj.fabricante,
+                añoLanzamiento: obj.añoLanzamiento,
+                modelo: obj.modelo,
+                cantidadPuertas: obj.cantidadPuertas,
+                transmision4x4: "N/A",
             }
-
         }
-
-        delete obj.fechaPersona;
 
         let trProducto = document.createElement("tr");
         if (dice == "odd") {
@@ -158,25 +161,13 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
                 let thProducto = document.createElement("th");
                 thead.className = "table-light";
 
-                let nombreCol = key.replace(key[0], key[0].toUpperCase());
-                let checkInput = "<input type='checkbox' checked id=th-" + key + " class='thFiltro'></input>";
-
-                //console.log(colFiltradas);
-                if (colFiltradas) {
-                    colFiltradas.forEach(el => {
-                        if (el == key) {
-                            checkInput = "<input type='checkbox' id=th-" + key + " class='thFiltro'></input>";
-                        }
-                    })
-                }
+                let añoLanzamientoCol = key.replace(key[0], key[0].toUpperCase());
 
                 let thOrdenar = document.createElement("a");
                 thOrdenar.id = "thOrdenar";
-                thOrdenar.innerHTML = nombreCol
+                thOrdenar.innerHTML = añoLanzamientoCol
 
                 thProducto.appendChild(thOrdenar);
-
-                thProducto.innerHTML += checkInput;
 
                 trEncabezadoTabla.appendChild(thProducto)
             }
@@ -190,103 +181,148 @@ function armarTabla(objs, nombreObjs, colFiltradas) {
         })
 
         if (primeraVezIterando == true) {
+
+            let thModificar = document.createElement("th");
+            thModificar.innerHTML = "Modificar";
+            let thEliminar = document.createElement("th");
+            thEliminar.innerHTML = "Eliminar"
+
+            trEncabezadoTabla.appendChild(thModificar);
+            trEncabezadoTabla.appendChild(thEliminar);
             thead.appendChild(trEncabezadoTabla);
         }
         primeraVezIterando = false;
+
+        let botonModificar = document.createElement("button");
+        botonModificar.classList += "botonTabla";
+        botonModificar.innerHTML = "MODIFICAR";
+        botonModificar.onclick = function (event) {
+            document.getElementById("tituloForm").innerHTML = "Modificacion";
+            mostrarEnFormulario(obj.id);
+        }
+        trProducto.appendChild(botonModificar);
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.classList += "botonTabla";
+        botonEliminar.innerHTML = "ELIMINAR";
+        botonEliminar.onclick = function () {
+            document.getElementById("tituloForm").innerHTML = "Baja";
+            mostrarEnFormulario(obj.id);
+            btnModificar.hidden = true;
+            btnEliminar.hidden = false;
+        }
+        trProducto.appendChild(botonEliminar);
+
         tbody.appendChild(trProducto);
 
     })
 
     tabla.appendChild(thead);
     tabla.appendChild(tbody);
-    //tabla.id = "tabla_" + nombreObjs;
+    //tabla.id = "tabla_" + añoLanzamientoObjs;
     return tabla;
 }
 
 function refrescarTabla() {
 
-    document.getElementById("propEliminar").value = "";
-    let tabla = document.getElementById("tabla_persona");
+    let tabla = document.getElementById("tabla_vehiculo");
 
     if (tabla) {
         tabla.remove();
         document.getElementById("ayudaTabla").remove();
     }
-    setTimeout(() => { administrarTabla() }, (Math.random() * (2000 - 500) + 500));
+    administrarTabla()
 }
 
-function mostrarEnFormulario(e) {
+function mostrarEnFormulario(vehiculo_id) {
 
-    setVisibilidadForm(true);
-    let idProdEliminar = e.srcElement.parentElement.dataset.personaid;
+    setFormVisible(true);
 
-    if (!idProdEliminar) {
+    setTableVisible(false);
+
+    botonModificar.hidden = false;
+    botonEnviar.hidden = true;
+
+    let vehiculo = JSON.parse(localStorage.getItem("vehiculos")).filter(function (i) {
+        return i.id == vehiculo_id;
+    })[0];
+
+
+    if (!vehiculo_id) {
         return null;
     }
-    let inputHidden = document.getElementById("propEliminar");
-    inputHidden.setAttribute("value", idProdEliminar);
 
-    var campos = ['id', 'dni', 'nombre', 'apellido', 'cursoNumero', 'cursoLetra', 'año', 'materia'];
-    e.srcElement.parentElement.childNodes.forEach((el, i) => {
-        if(campos[i] == 'id'){
-            return;
-        }
-        if (campos[i] == 'año') {
-            let modalidad = document.getElementById("modalidad");
-            if (el.innerHTML == '') {
-                modalidad.value = "alumno";
-            } else {
-                modalidad.value = "docente";
-                document.getElementById("cursoNumero").value = el.innerHTML
-            }
-            modalidad.dispatchEvent(new Event('change'))
-        } else if(campos[i] == 'materia' && el.innerHTML != ""){
-            document.getElementById("cursoLetra").value = el.innerHTML
-        } else if (campos[i] == 'materia' && el.innerHTML == "") {
+    let modalidad = document.getElementById("modalidad");
 
+    modalidad.value = vehiculo.hasOwnProperty('transmision4x4') ? modalidad.value = "camioneta" : modalidad.value = "auto"
+
+    modalidad.dispatchEvent(new Event('change'))
+
+    Object.keys(vehiculo).forEach((attr) => {
+
+        if (attr === "cantidadPuertas") {
+            document.getElementById("cantidadPuertas").value = vehiculo["cantidadPuertas"];
+        } else if (attr === "transmision4x4") {
+            document.getElementById("transmision4x4").value = vehiculo["transmision4x4"];
         } else {
-            document.getElementById(campos[i]).value = el.innerHTML;
+            document.getElementById(attr).value = vehiculo[attr];
         }
-
     });
+
+
 }
 
-function enviarModificarPersona(e) {
+function enviarModificarVehiculo(e) {
 
     e.preventDefault();
 
-    if (document.getElementById("propEliminar").value == '' || !AdministrarValidaciones()) {
+    if (!AdministrarValidaciones()) {
         return false;
     }
 
-    let dni = parseInt(document.getElementById('dni').value);
-    let apellido = document.getElementById('apellido').value;
-    let nombre = document.getElementById('nombre').value;
-    let cursoLetra = document.getElementById('cursoLetra').value;
-    let cursoNumero = parseInt(document.getElementById('cursoNumero').value);
+    let id = parseInt(document.getElementById('id').value);
+    let fabricante = document.getElementById('fabricante').value;
+    let modelo = document.getElementById('modelo').value;
+    let añoLanzamiento = document.getElementById('añoLanzamiento').value;
     let modalidad = document.getElementById('modalidad').value;
-    let idModificar = parseInt(document.getElementById("propEliminar").value);
 
-    let persona;
+    let vehiculo;
     switch (modalidad) {
 
-        case 'docente': { persona = new Docente(idModificar, dni, apellido, nombre, cursoLetra, cursoNumero) }; break;
-        case 'alumno': { persona = new Alumno(idModificar, dni, apellido, nombre, cursoLetra, cursoNumero) }; break;
+        case 'auto': {
+            let cantidadPuertas = parseInt(document.getElementById('cantidadPuertas').value);
+            vehiculo = new Auto(id, fabricante, modelo, añoLanzamiento, cantidadPuertas)
+        }; break;
+        case 'camioneta': {
+            let transmision4x4 = document.getElementById("transmision4x4").value;
+            vehiculo = new Camioneta(id, fabricante, modelo, añoLanzamiento, transmision4x4)
+        }; break;
     }
-    
-    if (idModificar) {
-        modificarPersona(persona);
-        refrescarTabla();
-        document.getElementById("btnLimpiar").click()
-    }
+    setSpinnerVisible(true);
 
-    document.getElementById("btnMostrarFormulario").click()
+    modificarVehiculo(vehiculo).then(function (data) {
+        alert(data)
+    }).catch(function (e) {
+        //console.log("TE ODIO JAVASCRIPT");
+        if (e.body == "") {
+            e.body = "Hubo un problema al establecer la conexion con el servidor";
+        }
+        alert(e.body);
+    }).finally(function () {
+        setSpinnerVisible(false);
+        refrescarTabla();
+        document.getElementById("btnMostrarFormulario").click()
+        let primerElSeccTabla = document.getElementById("seccionTabla").children[0];
+        if (primerElSeccTabla.tagName == "P") {
+            primerElSeccTabla.remove();
+        }
+    });
 }
 
 function ordenarTabla(e) {
     e.preventDefault();
 
-    let personas = filtrarPersonas(getPersonas());
+    let vehiculos = filtrarVehiculos(localStorage.getItem("vehiculos"));
 
     let campoProp = e.target.text.toLowerCase();
     if (campoProp == "tipoventa") {
@@ -302,7 +338,7 @@ function ordenarTabla(e) {
         metodoSort = "menor"
     }
 
-    personas.sort(function (per1, per2) {
+    vehiculos.sort(function (per1, per2) {
 
         let resultado;
         if (metodoSort == "mayor") {
@@ -323,132 +359,106 @@ function ordenarTabla(e) {
     localStorage.setItem("metodoSort", metodoSort);
 
     document.getElementById("ayudaTabla").remove();
-    document.getElementById("tabla_persona").remove();
+    document.getElementById("tabla_vehiculo").remove();
 
-    var colsOcultas = JSON.parse(localStorage.getItem("columnasOcultas"));
-    if (colsOcultas != null && colsOcultas.length > 0) {
-        personas.map((el) => { for (let campo in colsOcultas) { el[colsOcultas[campo]] = ""; } });
-    }
-    let tabla = armarTabla(personas, "persona", colsOcultas);
-    armarSeccionTabla(tabla, personas)
+    let tabla = armarTabla(vehiculos, "vehiculos");
+    armarSeccionTabla(tabla, vehiculos)
 
 }
 
-function enviarEliminarPersona(e) {
+function enviarEliminarVehiculo(e) {
 
     e.preventDefault();
+    setSpinnerVisible(true); //lel
+    btnEliminar.disabled = true;
 
-    if (document.getElementById("propEliminar").value == '' || !AdministrarValidaciones()) {
-        return false;
-    }
+    let id_vehiculo = parseInt(document.getElementById('id').value);
 
-    let idEliminar = document.getElementById("propEliminar").value;
-    if (idEliminar) {
-        eliminarPersona(idEliminar);
-        refrescarTabla();
-        document.getElementById("btnLimpiar").click()
-    }
+    eliminarVehiculo(id_vehiculo).then((resp) => {
+        return resp.text()
+    })
+        .then(data => {
+            if (data.includes("Error")) {
+                throw new Error(data);
+            }
 
-    document.getElementById("btnMostrarFormulario").click()
+            let vehiculos = JSON.parse(localStorage.getItem("vehiculos"));
+
+            vehiculos = vehiculos.filter(e => { return e.id != id_vehiculo });
+            localStorage.setItem("vehiculos", JSON.stringify(vehiculos));
+            alert(data)
+
+        }).catch((e) => {
+            if (!e.message.includes("Failed to fetch")) {
+                alert(e.message);
+            } else {
+                alert('No se pudo establecer una conexion con el servidor');
+            }
+
+        }).finally(() => {
+
+            setSpinnerVisible(false);
+            refrescarTabla();
+            document.getElementById("btnMostrarFormulario").click()
+            let primerElSeccTabla = document.getElementById("seccionTabla").children[0];
+            if (primerElSeccTabla.tagName == "P") {
+                primerElSeccTabla.remove();
+            }
+            btnEliminar.disabled = false;
+        });
 }
 
-function limpiarForm(e) {
+function limpiarForm() {
 
-    e.preventDefault();
     document.getElementById("formularioBienesRaices").reset()
-    document.getElementById("propEliminar").value = "";
     let divErrores = document.getElementById("errorSection");
     if (divErrores) {
         document.getElementById("errorSection").remove();
     }
 }
 
-function filtrarPersonas(per) {
+function filtrarVehiculos(veh) {
 
     let selectedOpt = document.getElementById("selectFiltro").value;
-    if (selectedOpt != "todos" && per.length > 0) {
-        per = per.filter(el => {
-            if (el.hasOwnProperty("cursoLetra") && selectedOpt == "alumno") {
+    if (selectedOpt != "todos" && veh.length > 0) {
+        veh = veh.filter(el => {
+            if (el.hasOwnProperty("transmision4x4") && selectedOpt == "camioneta") {
                 return el;
-            }else if(el.hasOwnProperty("año") && selectedOpt == "docente"){
+            } else if (el.hasOwnProperty("cantidadPuertas") && selectedOpt == "auto") {
                 return el;
             }
         })
     }
-    return per
+    return veh
 }
 
 function filtrarTabla(e) {
 
-    let per = localStorage.getItem("personas");
+    let veh = localStorage.getItem("vehiculos");
 
-    let columnasOcultas = getColumnasOcultas();
-
-    let tablaExistente = document.getElementById("tabla_persona");
-    if (per && tablaExistente != null) {
-        per = JSON.parse(per);
-        document.getElementById("tabla_persona").remove();
+    let tablaExistente = document.getElementById("tabla_vehiculo");
+    if (veh && tablaExistente != null) {
+        veh = JSON.parse(veh);
+        document.getElementById("tabla_vehiculo").remove();
         document.getElementById("ayudaTabla").remove();
-        per = filtrarPersonas(per);
+        veh = filtrarVehiculos(veh);
 
-        per.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
-        //Si borro con delete no aparecen los checks'
-
-        let tabla = armarTabla(per, "persona", columnasOcultas);
+        let tabla = armarTabla(veh, "vehiculo");
         armarSeccionTabla(tabla)
-        mostrarPromedioIDs(per);
+        //mostrarPromedioIDs(veh);
     }
 
 }
 
-function filtrarColumna(e) {
-
-    let per = localStorage.getItem("personas");
-
-    let columnasOcultas = getColumnasOcultas();
-    localStorage.setItem("columnasOcultas", JSON.stringify(columnasOcultas));
-
-    let tablaExistente = document.getElementById("tabla_persona");
-    if (per && tablaExistente != null) {
-
-        per = JSON.parse(per);
-        per = filtrarPersonas(per);
-
-        per.map((el) => { for (let campo in columnasOcultas) { el[columnasOcultas[campo]] = ""; } });
-        //Si borro con delete no aparecen los checks'
-
-        document.getElementById("tabla_persona").remove();
-        document.getElementById("ayudaTabla").remove();
-
-
-        let tabla = armarTabla(per, "persona", columnasOcultas);
-        armarSeccionTabla(tabla)
-    }
-}
-
-function getColumnasOcultas() {
-
-    let thFiltros = document.getElementsByClassName("thFiltro")
-    let columnasOcultas = [];
-
-    Array.from(thFiltros).forEach((el) => {
-        if (!el.checked) {
-            columnasOcultas.push(el.id.substr(3))
-        }
-    });
-
-    return columnasOcultas;
-}
-
-function mostrarPromedioIDs(personas) {
+function mostrarPromedioIDs(vehiculos) {
 
     let totalIDs = 0;
-    totalIDs = personas.reduce(function( valorAnterior, valorActual, indice, vector){
+    totalIDs = vehiculos.reduce(function (valorAnterior, valorActual, indice, vector) {
         return valorActual.id + valorAnterior
-      }, totalIDs);
+    }, totalIDs);
 
     //console.log(totalIDs)
-    if (personas.length > 0) {
+    if (vehiculos.length > 0) {
         promedioIDs = totalIDs / (document.querySelectorAll("tr").length - 1);
     } else {
         promedioIDs = "N/A";
@@ -462,18 +472,40 @@ function switchMostrarFormulario(e) {
 
     e.preventDefault();
 
-    botonLimpiar.click();
+    botonEliminar.hidden = true;
+    botonModificar.hidden = true;
+    botonEnviar.hidden = false;
+    limpiarForm();
     let articleFormulario = document.getElementById("seccionFormulario")
     let estadoVisibilidad = articleFormulario.style.display
     if (estadoVisibilidad == "none") {
+        document.getElementById("tituloForm").innerHTML = "Alta";
         articleFormulario.style.display = "block";
+        setTableVisible(false)
     } else {
+        setTableVisible(true)
         articleFormulario.style.display = "none";
     }
 }
 
-function setVisibilidadForm(visibilidad) {
+function setTableVisible(visibility) {
+
+    let tabla = document.getElementById("tabla_vehiculo");
+    tabla.hidden = !visibility;
+}
+
+function setFormVisible(visibility) {
 
     let articleFormulario = document.getElementById("seccionFormulario")
-    visibilidad == true ? articleFormulario.style.display = "block" : articleFormulario.style.display = "none";
+    visibility == true ? articleFormulario.style.display = "block" : articleFormulario.style.display = "none";
 }
+
+function setSpinnerVisible(visibility) {
+    let spinnerEl = document.getElementById("spinner");
+    if (visibility) {
+        window.scrollTo(0, 0)
+    }
+    spinnerEl.hidden = !visibility;
+}
+
+document.getElementById("speeeeneeng").onclick = () => { window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ") }
