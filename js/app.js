@@ -481,6 +481,15 @@ function switchMostrarFormulario(e) {
     if (estadoVisibilidad == "none") {
         document.getElementById("tituloForm").innerHTML = "Alta";
         articleFormulario.style.display = "block";
+
+        document.getElementById("modalidad").value = "camioneta"
+        
+        document.getElementById("labelTrans").hidden = false;
+        document.getElementById("labelPuertas").hidden = true;
+
+        document.getElementById("cantidadPuertas").hidden = true;
+        document.getElementById("transmision4x4").hidden = false;
+
         setTableVisible(false)
     } else {
         setTableVisible(true)
